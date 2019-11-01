@@ -1,0 +1,49 @@
+{
+  "name": "football-chat-bot-2",
+  "version": "1.0.0",
+  "description": "Footbal chat bot build with NestJS framework",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS -g './git/commitlint.js'"
+    }
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-customizable"
+    },
+    "cz-customizable": {
+      "config": "./git/commitizen.js"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tormozz48/football-chat-bot-2.git"
+  },
+  "keywords": [
+    "football",
+    "chat",
+    "bot",
+    "telegram",
+    "telegram",
+    "bot",
+    "nestjs",
+    "nodejs",
+    "typescript"
+  ],
+  "author": "andrey.kuznetsov48@yandex.ru",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tormozz48/football-chat-bot-2/issues"
+  },
+  "homepage": "https://github.com/tormozz48/football-chat-bot-2#readme",
+  "devDependencies": {
+    "@commitlint/cli": "^8.2.0",
+    "commitizen": "^4.0.3",
+    "cz-customizable": "^6.2.0",
+    "husky": "^3.0.9"
+  }
+}
