@@ -57,7 +57,9 @@
     "rimraf": "^3.0.0",
     "rxjs": "^6.5.3",
     "socks5-https-client": "^1.2.1",
-    "telegraf": "^3.33.3"
+    "sqlite3": "^4.1.0",
+    "telegraf": "^3.33.3",
+    "typeorm": "^0.2.20"
   },
   "devDependencies": {
     "@commitlint/cli": "^8.2.0",
