@@ -3,15 +3,11 @@ import { BaseAction } from './base.action';
 
 @Injectable()
 export class EventRemoveAction extends BaseAction {
-    private event: string;
-
-    protected initialize() {
+    protected setEvent(): void {
         this.event = this.appEmitter.EVENT_REMOVE;
-        this.logger.log(`subscribe on "${this.event}" event`);
-        this.appEmitter.on(this.event, this.handleEvent.bind(this));
     }
 
-    protected handleEvent(ctx) {
-        this.logger.log(`"${this.event}" event received`);
+    protected async doAction(ctx) {
+        throw new Error('not implemented');
     }
 }

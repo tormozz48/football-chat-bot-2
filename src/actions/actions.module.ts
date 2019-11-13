@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { CommonModule } from '../common/common.module';
+import { StorageModule } from '../storage/storage.module';
 
 import { EventAddAction } from './event_add.action';
 import { EventInfoAction } from './event_info.action';
@@ -8,7 +9,7 @@ import { PersonAddAction } from './person_add.action';
 import { PersonRemoveAction } from './person_remove.action';
 
 @Module({
-    imports: [CommonModule],
+    imports: [CommonModule, StorageModule],
     providers: [
         EventAddAction,
         EventInfoAction,
