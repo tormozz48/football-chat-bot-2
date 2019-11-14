@@ -1,4 +1,6 @@
 import { Injectable} from '@nestjs/common';
+
+import { getEventDate } from '../common/utils';
 import { BaseAction } from './base.action';
 import { Chat } from 'src/storage/models/chat';
 import { Event } from 'src/storage/models/event';
@@ -15,6 +17,14 @@ export class EventAddAction extends BaseAction {
         const chat: Chat = await this.storageService.ensureChat(chatId);
 
         await this.storageService.markChatEventsInactive(chat.id);
-        const event: Event = await this.storageService.appendChatActiveEvent(chat, new Date());
+        const eventDate: Date = getEventDate();
+        const event: Event = await this.storageService.appendChatActiveEvent(chat, eventDate);
+
+        const answer: string = this.templateService.apply({
+            action: 'event_add',
+            status: this.STATUS_SUCCESS,
+        }, {date: event.date});
+
+        ctx.replyWithHTML(answer);
     }
 }

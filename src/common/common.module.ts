@@ -1,6 +1,7 @@
 import { Module, Logger} from '@nestjs/common';
 import { ConfigService } from './config.service';
 import { AppEmitter } from './event-bus.service';
+import { TemplateService } from './template.service';
 
 @Module({
     providers: [
@@ -16,7 +17,9 @@ import { AppEmitter } from './event-bus.service';
             provide: Logger,
             useValue: new Logger(),
         },
+        TemplateService,
+
     ],
-    exports: [ConfigService, AppEmitter, Logger],
+    exports: [ConfigService, AppEmitter, Logger, TemplateService],
 })
 export class CommonModule {}

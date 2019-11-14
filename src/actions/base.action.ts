@@ -1,14 +1,19 @@
 import { Injectable, Logger} from '@nestjs/common';
 import { ConfigService } from '../common/config.service';
 import { AppEmitter } from '../common/event-bus.service';
+import { TemplateService } from '../common/template.service';
 import { StorageService } from '../storage/storage.service';
 
 @Injectable()
 export class BaseAction {
+    protected readonly STATUS_SUCCESS: string = 'success';
+    protected readonly STATUS_FAIL: string = 'fail';
+
     protected appEmitter: AppEmitter;
     protected config: ConfigService;
     protected logger: Logger;
 
+    protected templateService: TemplateService;
     protected storageService: StorageService;
 
     protected event: string;
@@ -17,12 +22,14 @@ export class BaseAction {
         config: ConfigService,
         appEmitter: AppEmitter,
         logger: Logger,
+        templateService: TemplateService,
         storageService: StorageService,
     ) {
         this.config = config;
         this.logger = logger;
 
         this.appEmitter = appEmitter;
+        this.templateService = templateService;
         this.storageService = storageService;
 
         this.setEvent();
