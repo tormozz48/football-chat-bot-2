@@ -1,5 +1,6 @@
 import { Injectable} from '@nestjs/common';
-import { BaseAction } from './base.action';
+import { BaseAction, IDoActionParams } from './base.action';
+import { Event } from '../storage/models/event';
 
 @Injectable()
 export class PersonAddAction extends BaseAction {
@@ -7,7 +8,11 @@ export class PersonAddAction extends BaseAction {
         this.event = this.appEmitter.PERSON_ADD;
     }
 
-    protected async doAction(ctx) {
-        throw new Error('not implemented');
+    protected async doAction(ctx, params: IDoActionParams) {
+        const activeEvent: Event = await this.storageService.findChatActiveEvent(params.chat);
+
+        if (!activeEvent) {
+            
+        }
     }
 }

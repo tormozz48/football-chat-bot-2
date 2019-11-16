@@ -1,6 +1,7 @@
 import * as path from 'path';
 import * as fs from 'fs';
 import * as handlebars from 'handlebars';
+import { readDirDeepSync } from 'read-dir-deep';
 import { Injectable, Logger } from '@nestjs/common';
 
 interface ITemplate {
@@ -22,7 +23,7 @@ export class TemplateService {
     private readonly TEMPLATE_PATH: string = 'templates';
 
     private logger: Logger;
-    private templates: ITemplate[];
+    private templatesMap: Map<string, (d: any) => string>;
 
     constructor(logger: Logger) {
         this.logger = logger;
@@ -33,9 +34,7 @@ export class TemplateService {
     public apply(params: IParams, data: any) {
         this.logger.log(`apply template: ${params.action} ${params.status} ${params.lang}`);
 
-        let template: ITemplate;
-
-        template = this.getTemplate(params);
+        let template = this.getTemplate(params);
 
         if (!template) {
             params.lang = this.DEFAULT_LANG;
@@ -46,36 +45,33 @@ export class TemplateService {
             throw new Error('template-not-found');
         }
 
-        return template.templateFn(data);
+        return template(data);
     }
 
-    private getTemplate(params: IParams) {
-        return this.templates.find((item: ITemplate) => {
-            return item.action === params.action
-                && item.status === params.status
-                && item.lang === params.lang;
-        });
+    private getTemplate(params: IParams): (data: any) => string {
+        const {lang, action, status} = params;
+        return this.templatesMap.get(this.getTemplateKey(lang, action, status));
     }
 
     private load() {
         this.logger.log('load templates');
 
         const templatesDir: string = path.join(process.cwd(), this.TEMPLATE_PATH);
-        const templates: string[] = fs.readdirSync(templatesDir);
+        const templateFileNames: string[] = readDirDeepSync(templatesDir);
 
-        this.templates = templates.map((item: string) => {
-            const [action, status, lang] = item.split('.');
-            const templatePath: string = path.join(templatesDir, item);
-            const template: string = fs.readFileSync(templatePath, {encoding: 'utf-8'});
+        this.templatesMap = templateFileNames.reduce((acc, fileName) => {
+            this.logger.debug(`load template: ${fileName}`);
+            const template = fs.readFileSync(fileName, {encoding: 'utf-8'});
 
-            this.logger.log(`template loaded: ${action} ${status} ${lang}`);
+            const [, lang, action, status] = fileName.replace(/\.hbs$/, '').split('/');
+            return acc.set(
+                this.getTemplateKey(lang, action, status),
+                handlebars.compile(template),
+            );
+        }, new Map());
+    }
 
-            return {
-                action,
-                status,
-                lang,
-                templateFn: handlebars.compile(template),
-            };
-        });
+    private getTemplateKey(lang: string, action: string, status: string): string {
+        return `${lang}-${action}-${status}`;
     }
 }
