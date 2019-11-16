@@ -3,6 +3,12 @@ import { ConfigService } from '../common/config.service';
 import { AppEmitter } from '../common/event-bus.service';
 import { TemplateService } from '../common/template.service';
 import { StorageService } from '../storage/storage.service';
+import { Chat } from '../storage/models/chat';
+
+export interface IDoActionParams {
+    chat: Chat;
+    lang: string;
+}
 
 @Injectable()
 export class BaseAction {
@@ -42,14 +48,19 @@ export class BaseAction {
         throw new Error('not implemented');
     }
 
-    protected async doAction(ctx) {
+    protected async doAction(ctx, params: IDoActionParams) {
         throw new Error('not implemented');
     }
 
     private async handleEvent(ctx) {
         try {
             this.logger.log(`"${this.event}" event received`);
-            return await this.doAction(ctx);
+
+            const lang: string = ctx.update.message.from.language_code;
+            const chatId: number = ctx.update.message.chat.id;
+            const chat: Chat = await this.storageService.ensureChat(chatId);
+
+            return await this.doAction(ctx, {chat, lang});
         } catch (error) {
             this.logger.error(error);
         }

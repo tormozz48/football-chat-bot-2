@@ -53,4 +53,13 @@ export class StorageService {
 
         return this.eventRepository.save(event);
     }
+
+    public findChatActiveEvent(chat: Chat): Promise<Event|null> {
+        return this.eventRepository.findOne({
+            where: {
+                chatId: chat.chatId,
+                active: true,
+            },
+        });
+    }
 }
