@@ -3,8 +3,6 @@ import * as fs from 'fs';
 import * as handlebars from 'handlebars';
 import { Injectable, Logger } from '@nestjs/common';
 
-import { ConfigService } from '../common/config.service';
-
 interface ITemplate {
     action: string;
     status: string;

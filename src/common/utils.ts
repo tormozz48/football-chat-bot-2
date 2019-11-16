@@ -13,3 +13,7 @@ export const getEventDate = (): Date => {
         .millisecond(0)
         .toDate();
 };
+
+export const formatEventDate = (date: Date|string): string => {
+    return moment.utc(date).format('DD-MM-YYYY HH:mm');
+};

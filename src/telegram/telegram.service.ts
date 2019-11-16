@@ -21,7 +21,6 @@ export class TelegramService {
 
         this.bot = new Telegraf(botToken, {
             telegram: {
-                webhookReply: false,
                 agent: socksAgent,
             },
         });

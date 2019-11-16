@@ -1,6 +1,6 @@
 import { Injectable} from '@nestjs/common';
 
-import { getEventDate } from '../common/utils';
+import { getEventDate, formatEventDate } from '../common/utils';
 import { BaseAction } from './base.action';
 import { Chat } from 'src/storage/models/chat';
 import { Event } from 'src/storage/models/event';
@@ -13,6 +13,7 @@ export class EventAddAction extends BaseAction {
 
     protected async doAction(ctx) {
         const chatId: number = ctx.update.message.chat.id;
+        const lang: string = ctx.update.message.from.language_code;
 
         const chat: Chat = await this.storageService.ensureChat(chatId);
 
@@ -23,7 +24,8 @@ export class EventAddAction extends BaseAction {
         const answer: string = this.templateService.apply({
             action: 'event_add',
             status: this.STATUS_SUCCESS,
-        }, {date: event.date});
+            lang,
+        }, {date: formatEventDate(event.date)});
 
         ctx.replyWithHTML(answer);
     }
