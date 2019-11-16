@@ -62,4 +62,29 @@ export class StorageService {
             },
         });
     }
+
+    public getPlayers(event: Event): Promise<Player[]> {
+        return this.playerRepository.find({
+            where: {
+                eventId: event.id,
+            },
+        });
+    }
+
+    public findPlayer(event: Event, name: string): Promise<Player|null> {
+        return this.playerRepository.findOne({
+            where: {
+                eventId: event.id,
+                name,
+            },
+        });
+    }
+
+    public addPlayer(event: Event, name: string): Promise<Player> {
+        const player: Player = new Player();
+        player.event = event;
+        player.name = name;
+
+        return this.playerRepository.save(player);
+    }
 }
