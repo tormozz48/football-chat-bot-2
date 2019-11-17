@@ -5,8 +5,8 @@ import { StorageModule } from '../storage/storage.module';
 import { EventAddAction } from './event_add.action';
 import { EventInfoAction } from './event_info.action';
 import { EventRemoveAction } from './event_remove.action';
-import { PersonAddAction } from './person_add.action';
-import { PersonRemoveAction } from './person_remove.action';
+import { PlayerAddAction } from './player_add.action';
+import { PlayerRemoveAction } from './player_remove.action';
 
 @Module({
     imports: [CommonModule, StorageModule],
@@ -14,8 +14,8 @@ import { PersonRemoveAction } from './person_remove.action';
         EventAddAction,
         EventInfoAction,
         EventRemoveAction,
-        PersonAddAction,
-        PersonRemoveAction,
+        PlayerAddAction,
+        PlayerRemoveAction,
     ],
     exports: [],
 })

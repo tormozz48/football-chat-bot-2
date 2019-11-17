@@ -4,13 +4,6 @@ import * as handlebars from 'handlebars';
 import { readDirDeepSync } from 'read-dir-deep';
 import { Injectable, Logger } from '@nestjs/common';
 
-interface ITemplate {
-    action: string;
-    status: string;
-    lang: string;
-    templateFn: (data: any) => string;
-}
-
 interface IParams {
     action: string;
     status: string;

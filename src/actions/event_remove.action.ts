@@ -1,6 +1,6 @@
 import { Injectable} from '@nestjs/common';
 import { formatEventDate } from '../common/utils';
-import { BaseAction, IDoActionParams } from './base.action';
+import { BaseAction, IDoActionParams, IActionResult } from './base.action';
 import { Event } from 'src/storage/models/event';
 
 @Injectable()
@@ -9,25 +9,12 @@ export class EventRemoveAction extends BaseAction {
         this.event = this.appEmitter.EVENT_REMOVE;
     }
 
-    protected async doAction(ctx, params: IDoActionParams) {
+    protected async doAction(params: IDoActionParams): Promise<IActionResult> {
         const activeEvent: Event = await this.storageService.findChatActiveEvent(params.chat);
         await this.storageService.markChatEventsInactive(params.chat.id);
 
-        const templateParams = {
-            action: 'event_remove',
-            lang: params.lang,
-        };
-
-        const answer = activeEvent
-            ? this.templateService.apply({
-                status: this.STATUS_SUCCESS,
-                ...templateParams,
-            }, {date: formatEventDate(activeEvent.date)})
-            : this.templateService.apply({
-                status: this.STATUS_FAIL,
-                ...templateParams,
-            }, {});
-
-        ctx.replyWithHTML(answer);
+        return activeEvent
+            ? { status: this.STATUS_SUCCESS, data: {date: formatEventDate(activeEvent.date)} }
+            : { status: this.STATUS_FAIL };
     }
 }

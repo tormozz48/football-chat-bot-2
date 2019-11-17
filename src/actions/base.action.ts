@@ -8,6 +8,12 @@ import { Chat } from '../storage/models/chat';
 export interface IDoActionParams {
     chat: Chat;
     lang: string;
+    message?: any;
+}
+
+export interface IActionResult {
+    status: string;
+    data?: any;
 }
 
 @Injectable()
@@ -48,7 +54,7 @@ export class BaseAction {
         throw new Error('not implemented');
     }
 
-    protected async doAction(ctx, params: IDoActionParams) {
+    protected async doAction(params: IDoActionParams): Promise<IActionResult> {
         throw new Error('not implemented');
     }
 
@@ -56,11 +62,18 @@ export class BaseAction {
         try {
             this.logger.log(`"${this.event}" event received`);
 
-            const lang: string = ctx.update.message.from.language_code;
-            const chatId: number = ctx.update.message.chat.id;
+            const message = ctx.update.message;
+            const lang: string = message.from.language_code;
+            const chatId: number = message.chat.id;
             const chat: Chat = await this.storageService.ensureChat(chatId);
 
-            return await this.doAction(ctx, {chat, lang});
+            const result: IActionResult = await this.doAction({chat, lang, message});
+
+            ctx.replyWithHTML(this.templateService.apply({
+                action: this.event,
+                status: result.status,
+                lang,
+            }, result.data || {}));
         } catch (error) {
             this.logger.error(error);
         }

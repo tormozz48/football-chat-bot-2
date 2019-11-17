@@ -7,16 +7,14 @@ import { Player } from './models/player';
 
 @Injectable()
 export class StorageService {
-    private logger: Logger;
     private dbConnection: Connection;
 
     private chatRepository: Repository<Chat>;
     private eventRepository: Repository<Event>;
     private playerRepository: Repository<Player>;
 
-    constructor(@Inject('dbConnection') dbConnection: Connection, logger: Logger) {
+    constructor(@Inject('dbConnection') dbConnection: Connection) {
         this.dbConnection = dbConnection;
-        this.logger = logger;
 
         this.chatRepository = this.dbConnection.getRepository(Chat);
         this.eventRepository = this.dbConnection.getRepository(Event);
@@ -86,5 +84,9 @@ export class StorageService {
         player.name = name;
 
         return this.playerRepository.save(player);
+    }
+
+    public removePlayer(player: Player): Promise<Player> {
+        return this.playerRepository.remove(player);
     }
 }
