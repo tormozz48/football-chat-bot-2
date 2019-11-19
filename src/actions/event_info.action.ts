@@ -14,7 +14,7 @@ export class EventInfoAction extends BaseAction {
         const activeEvent: Event = await this.storageService.findChatActiveEvent(params.chat);
 
         if (!activeEvent) {
-            return { status: 'no_event' } as IActionResult;
+            return {status: 'no_event'} as IActionResult;
         }
 
         const players: Player[] = await this.storageService.getPlayers(activeEvent);

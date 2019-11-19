@@ -14,7 +14,7 @@ export class EventRemoveAction extends BaseAction {
         await this.storageService.markChatEventsInactive(params.chat.id);
 
         return activeEvent
-            ? { status: this.STATUS_SUCCESS, data: {date: formatEventDate(activeEvent.date)} }
-            : { status: this.STATUS_FAIL };
+            ? {status: this.STATUS_SUCCESS, data: {date: formatEventDate(activeEvent.date)}}
+            : {status: this.STATUS_FAIL };
     }
 }

@@ -14,14 +14,14 @@ export class PlayerRemoveAction extends PlayerAction {
         const activeEvent: Event = await this.storageService.findChatActiveEvent(params.chat);
 
         if (!activeEvent) {
-            return { status: 'no_event'} as IActionResult;
+            return {status: 'no_event'} as IActionResult;
         }
 
         const name: string = this.resolveName(params.message);
         const existedPlayer: Player = await this.storageService.findPlayer(activeEvent, name);
 
         if (!existedPlayer) {
-            return { status: 'no_player', data: {name}} as IActionResult;
+            return {status: 'no_player', data: {name}} as IActionResult;
         }
 
         await this.storageService.removePlayer(existedPlayer);
