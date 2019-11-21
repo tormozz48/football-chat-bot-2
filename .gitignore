@@ -3,4 +3,4 @@
 *.env
 node_modules
 dist
-db.sqlite
+test.sqlite
