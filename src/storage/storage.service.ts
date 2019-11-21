@@ -1,4 +1,4 @@
-import { Injectable, Inject, Logger } from '@nestjs/common';
+import { Injectable, Inject} from '@nestjs/common';
 import { Connection, Repository, UpdateResult } from 'typeorm';
 
 import { Chat } from './models/chat';
@@ -19,6 +19,10 @@ export class StorageService {
         this.chatRepository = this.dbConnection.getRepository(Chat);
         this.eventRepository = this.dbConnection.getRepository(Event);
         this.playerRepository = this.dbConnection.getRepository(Player);
+    }
+
+    public get connection() {
+        return this.dbConnection;
     }
 
     public async ensureChat(chatId: number): Promise<Chat> {

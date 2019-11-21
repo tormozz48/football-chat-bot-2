@@ -76,6 +76,7 @@ export class BaseAction {
             }, result.data || {}));
         } catch (error) {
             this.logger.error(error);
+            ctx.replyWithHTML(error.message);
         }
     }
 }

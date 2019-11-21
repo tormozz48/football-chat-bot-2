@@ -4,7 +4,7 @@ import * as handlebars from 'handlebars';
 import { readDirDeepSync } from 'read-dir-deep';
 import { Injectable, Logger } from '@nestjs/common';
 
-interface IParams {
+export interface IParams {
     action: string;
     status: string;
     lang?: string;
@@ -24,7 +24,7 @@ export class TemplateService {
         this.load();
     }
 
-    public apply(params: IParams, data: any) {
+    public apply(params: IParams, data: any): string {
         this.logger.log(`apply template: ${params.action} ${params.status} ${params.lang}`);
 
         let template = this.getTemplate(params);
