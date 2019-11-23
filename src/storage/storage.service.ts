@@ -1,4 +1,5 @@
-import { Injectable, Inject} from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
+import { InjectConnection } from '@nestjs/typeorm';
 import { Connection, Repository, UpdateResult } from 'typeorm';
 
 import { Chat } from './models/chat';
@@ -7,15 +8,11 @@ import { Player } from './models/player';
 
 @Injectable()
 export class StorageService {
-    private dbConnection: Connection;
-
     private chatRepository: Repository<Chat>;
     private eventRepository: Repository<Event>;
     private playerRepository: Repository<Player>;
 
-    constructor(@Inject('dbConnection') dbConnection: Connection) {
-        this.dbConnection = dbConnection;
-
+    constructor(@InjectConnection() private readonly dbConnection: Connection) {
         this.chatRepository = this.dbConnection.getRepository(Chat);
         this.eventRepository = this.dbConnection.getRepository(Event);
         this.playerRepository = this.dbConnection.getRepository(Player);

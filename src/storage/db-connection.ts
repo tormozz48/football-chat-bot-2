@@ -1,21 +1,32 @@
-import { createConnection, ConnectionOptions, Connection } from 'typeorm';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { DynamicModule } from '@nestjs/common';
 
-export const dbConnection = {
-    provide: 'dbConnection',
-    useFactory: async (): Promise<Connection> => await createConnection(getConnectionOptions()),
+const commonOptions = {
+    entities: [
+        __dirname + '/models/*{.ts,.js}',
+    ],
+    synchronize: true,
+    logging: false,
 };
 
-function getConnectionOptions(): ConnectionOptions {
-    const env = process.env.NODE_ENV || 'development';
-    const dbPath = `./${env}.sqlite`;
-
-    return {
+const connections = {
+    development: {
         type: 'sqlite',
-        database: dbPath,
-        entities: [
-            __dirname + '/models/*{.ts,.js}',
-        ],
-        synchronize: true,
-        logging: false,
-    };
-}
+        database: 'development.sqlite',
+        ...commonOptions,
+    },
+    test: {
+        type: 'sqljs',
+        ...commonOptions,
+    },
+    production: {
+        type: 'sqlite',
+        database: 'production.sqlite',
+        ...commonOptions,
+    },
+};
+
+export const getConnection = (): DynamicModule => {
+    const env: string = process.env.NODE_ENV || 'development';
+    return TypeOrmModule.forRoot(connections[env]);
+};
