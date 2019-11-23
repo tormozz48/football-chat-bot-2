@@ -1,6 +1,7 @@
 # football-chat-bot-2
 Football chat bot build with NestJS framework
 
+[![Build Status](https://travis-ci.org/tormozz48/football-chat-bot-2.svg?branch=master)](https://travis-ci.org/tormozz48/football-chat-bot-2)
 [![tested with jest](https://img.shields.io/badge/tested_with-jest-99424f.svg)](https://github.com/facebook/jest)
 
 ## Install
