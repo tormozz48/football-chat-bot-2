@@ -1,10 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import {Injectable} from '@nestjs/common';
 
 import * as statuses from './statuses';
-import { formatEventDate } from '../common/utils';
-import { BaseAction, IDoActionParams, IActionResult } from './base.action';
-import { Event } from '../storage/models/event';
-import { Player } from 'src/storage/models/player';
+import {formatEventDate} from '../common/utils';
+import {BaseAction, IDoActionParams, IActionResult} from './base.action';
+import {Event} from '../storage/models/event';
+import {Player} from 'src/storage/models/player';
 
 @Injectable()
 export class EventInfoAction extends BaseAction {

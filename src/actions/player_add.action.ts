@@ -1,10 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import {Injectable} from '@nestjs/common';
 
 import * as statuses from './statuses';
-import { IDoActionParams, IActionResult } from './base.action';
-import { PlayerAction } from './player.action';
-import { Event } from '../storage/models/event';
-import { Player } from 'src/storage/models/player';
+import {IDoActionParams, IActionResult} from './base.action';
+import {PlayerAction} from './player.action';
+import {Event} from '../storage/models/event';
+import {Player} from 'src/storage/models/player';
 
 @Injectable()
 export class PlayerAddAction extends PlayerAction {

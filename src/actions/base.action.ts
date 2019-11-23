@@ -1,9 +1,9 @@
-import { Injectable, Logger } from '@nestjs/common';
-import { ConfigService } from '../common/config.service';
-import { AppEmitter } from '../common/event-bus.service';
-import { TemplateService } from '../common/template.service';
-import { StorageService } from '../storage/storage.service';
-import { Chat } from '../storage/models/chat';
+import {Injectable, Logger} from '@nestjs/common';
+import {ConfigService} from '../common/config.service';
+import {AppEmitter} from '../common/event-bus.service';
+import {TemplateService} from '../common/template.service';
+import {StorageService} from '../storage/storage.service';
+import {Chat} from '../storage/models/chat';
 
 export interface IDoActionParams {
     chat: Chat;
@@ -78,7 +78,7 @@ export class BaseAction {
      * @memberOf BaseAction
      */
     protected createActionResult(status: string, data?: any): IActionResult {
-        return { status, data } as IActionResult;
+        return {status, data} as IActionResult;
     }
 
     private async handleEvent(ctx) {

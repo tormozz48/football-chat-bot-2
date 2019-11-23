@@ -1,12 +1,12 @@
-import { Module } from '@nestjs/common';
-import { CommonModule } from '../common/common.module';
-import { StorageModule } from '../storage/storage.module';
+import {Module} from '@nestjs/common';
+import {CommonModule} from '../common/common.module';
+import {StorageModule} from '../storage/storage.module';
 
-import { EventAddAction } from './event_add.action';
-import { EventInfoAction } from './event_info.action';
-import { EventRemoveAction } from './event_remove.action';
-import { PlayerAddAction } from './player_add.action';
-import { PlayerRemoveAction } from './player_remove.action';
+import {EventAddAction} from './event_add.action';
+import {EventInfoAction} from './event_info.action';
+import {EventRemoveAction} from './event_remove.action';
+import {PlayerAddAction} from './player_add.action';
+import {PlayerRemoveAction} from './player_remove.action';
 
 @Module({
     imports: [CommonModule, StorageModule],

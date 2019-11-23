@@ -1,9 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import {Injectable} from '@nestjs/common';
 
 import * as statuses from './statuses';
-import { formatEventDate } from '../common/utils';
-import { BaseAction, IDoActionParams, IActionResult } from './base.action';
-import { Event } from 'src/storage/models/event';
+import {formatEventDate} from '../common/utils';
+import {BaseAction, IDoActionParams, IActionResult} from './base.action';
+import {Event} from 'src/storage/models/event';
 
 @Injectable()
 export class EventRemoveAction extends BaseAction {

@@ -1,8 +1,8 @@
 import * as path from 'path';
 import * as fs from 'fs';
 import * as handlebars from 'handlebars';
-import { readDirDeepSync } from 'read-dir-deep';
-import { Injectable, Logger } from '@nestjs/common';
+import {readDirDeepSync} from 'read-dir-deep';
+import {Injectable, Logger} from '@nestjs/common';
 
 export interface IParams {
     action: string;
@@ -44,7 +44,7 @@ export class TemplateService {
     }
 
     private getTemplate(params: IParams): (data: any) => string {
-        const { lang, action, status } = params;
+        const {lang, action, status} = params;
         return this.templatesMap.get(this.getTemplateKey(lang, action, status));
     }
 
@@ -59,7 +59,7 @@ export class TemplateService {
 
         this.templatesMap = templateFileNames.reduce((acc, fileName) => {
             this.logger.debug(`load template: ${fileName}`);
-            const template = fs.readFileSync(fileName, { encoding: 'utf-8' });
+            const template = fs.readFileSync(fileName, {encoding: 'utf-8'});
 
             const [, lang, action, status] = fileName
                 .replace(/\.hbs$/, '')

@@ -6,8 +6,8 @@ import {
     ManyToOne,
     JoinColumn,
 } from 'typeorm';
-import { Chat } from './chat';
-import { Player } from './player';
+import {Chat} from './chat';
+import {Player} from './player';
 
 @Entity()
 export class Event {

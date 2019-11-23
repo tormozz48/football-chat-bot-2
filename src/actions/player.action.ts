@@ -1,7 +1,7 @@
-import { Injectable } from '@nestjs/common';
-import { BaseAction } from './base.action';
-import { Event } from '../storage/models/event';
-import { Player } from 'src/storage/models/player';
+import {Injectable} from '@nestjs/common';
+import {BaseAction} from './base.action';
+import {Event} from '../storage/models/event';
+import {Player} from 'src/storage/models/player';
 
 @Injectable()
 export class PlayerAction extends BaseAction {
@@ -17,7 +17,7 @@ export class PlayerAction extends BaseAction {
      */
     protected resolveName(message): string {
         const targetName: string = message.text.replace(/^\/add\S*/, '').trim();
-        const { first_name: firstName, last_name: lastName } = message.from;
+        const {first_name: firstName, last_name: lastName} = message.from;
 
         return targetName.length > 0
             ? targetName

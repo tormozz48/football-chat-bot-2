@@ -1,10 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import {Injectable} from '@nestjs/common';
 
 import * as statuses from './statuses';
-import { IDoActionParams, IActionResult } from './base.action';
-import { PlayerAction } from './player.action';
-import { Event } from '../storage/models/event';
-import { Player } from 'src/storage/models/player';
+import {IDoActionParams, IActionResult} from './base.action';
+import {PlayerAction} from './player.action';
+import {Event} from '../storage/models/event';
+import {Player} from 'src/storage/models/player';
 
 @Injectable()
 export class PlayerRemoveAction extends PlayerAction {
@@ -28,7 +28,7 @@ export class PlayerRemoveAction extends PlayerAction {
         );
 
         if (!existedPlayer) {
-            return this.createActionResult(statuses.STATUS_NO_PLAYER, { name });
+            return this.createActionResult(statuses.STATUS_NO_PLAYER, {name});
         }
 
         await this.storageService.removePlayer(existedPlayer);

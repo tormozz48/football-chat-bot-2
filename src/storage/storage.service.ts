@@ -1,10 +1,10 @@
-import { Injectable } from '@nestjs/common';
-import { InjectConnection } from '@nestjs/typeorm';
-import { Connection, Repository, UpdateResult } from 'typeorm';
+import {Injectable} from '@nestjs/common';
+import {InjectConnection} from '@nestjs/typeorm';
+import {Connection, Repository, UpdateResult} from 'typeorm';
 
-import { Chat } from './models/chat';
-import { Event } from './models/event';
-import { Player } from './models/player';
+import {Chat} from './models/chat';
+import {Event} from './models/event';
+import {Player} from './models/player';
 
 @Injectable()
 export class StorageService {
@@ -30,7 +30,7 @@ export class StorageService {
      * @memberOf StorageService
      */
     public async ensureChat(chatId: number): Promise<Chat> {
-        let chat: Chat = await this.chatRepository.findOne({ chatId });
+        let chat: Chat = await this.chatRepository.findOne({chatId});
 
         if (chat) {
             return chat;
@@ -52,8 +52,8 @@ export class StorageService {
         return this.dbConnection
             .createQueryBuilder()
             .update(Event)
-            .set({ active: false })
-            .where('chatId = :chatId', { chatId })
+            .set({active: false})
+            .where('chatId = :chatId', {chatId})
             .execute();
     }
 

@@ -1,13 +1,13 @@
-import { createContextStub } from '../stubs/context.stub';
-import { createModuleStub } from '../stubs/actions.module.stub';
-import { clearDatabase } from '../helpers/db-helper';
+import {createContextStub} from '../stubs/context.stub';
+import {createModuleStub} from '../stubs/actions.module.stub';
+import {clearDatabase} from '../helpers/db-helper';
 
-import { AppEmitter } from '../../src/common/event-bus.service';
-import { StorageService } from '../../src/storage/storage.service';
+import {AppEmitter} from '../../src/common/event-bus.service';
+import {StorageService} from '../../src/storage/storage.service';
 import * as statuses from '../../src/actions/statuses';
-import { Chat } from '../../src/storage/models/chat';
-import { Event } from '../../src/storage/models/event';
-import { IParams } from '../../src/common/template.service';
+import {Chat} from '../../src/storage/models/chat';
+import {Event} from '../../src/storage/models/event';
+import {IParams} from '../../src/common/template.service';
 
 describe('EventRemoveAction', () => {
     let appEmitter: AppEmitter;
@@ -48,7 +48,7 @@ describe('EventRemoveAction', () => {
                 appEmitter.emit(appEmitter.EVENT_REMOVE, ctx);
             });
 
-            const { params }: { params: IParams } = JSON.parse(jsonRes);
+            const {params}: {params: IParams} = JSON.parse(jsonRes);
             expect(params.status).toBe(statuses.STATUS_NO_EVENT);
         });
 
@@ -87,7 +87,7 @@ describe('EventRemoveAction', () => {
                     appEmitter.emit(appEmitter.EVENT_REMOVE, ctx);
                 });
 
-                const { params }: { params: IParams } = JSON.parse(jsonRes);
+                const {params}: {params: IParams} = JSON.parse(jsonRes);
                 expect(params.status).toBe(statuses.STATUS_SUCCESS);
             });
         });

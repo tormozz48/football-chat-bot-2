@@ -6,14 +6,14 @@ import {
     JoinColumn,
     Index,
 } from 'typeorm';
-import { Event } from './event';
+import {Event} from './event';
 
 @Entity()
 export class Chat {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Index({ unique: true })
+    @Index({unique: true})
     @Column()
     chatId: number;
 

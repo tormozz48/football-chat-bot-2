@@ -1,4 +1,4 @@
-import { EventEmitter } from 'events';
+import {EventEmitter} from 'events';
 
 export class AppEmitter extends EventEmitter {
     public readonly EVENT_ADD: string = 'event_add';

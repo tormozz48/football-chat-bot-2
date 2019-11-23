@@ -1,12 +1,12 @@
-import { createContextStub } from '../stubs/context.stub';
-import { createModuleStub } from '../stubs/actions.module.stub';
-import { clearDatabase } from '../helpers/db-helper';
+import {createContextStub} from '../stubs/context.stub';
+import {createModuleStub} from '../stubs/actions.module.stub';
+import {clearDatabase} from '../helpers/db-helper';
 
-import { AppEmitter } from '../../src/common/event-bus.service';
-import { StorageService } from '../../src/storage/storage.service';
+import {AppEmitter} from '../../src/common/event-bus.service';
+import {StorageService} from '../../src/storage/storage.service';
 import * as statuses from '../../src/actions/statuses';
-import { Chat } from '../../src/storage/models/chat';
-import { IParams } from '../../src/common/template.service';
+import {Chat} from '../../src/storage/models/chat';
+import {IParams} from '../../src/common/template.service';
 
 describe('EventAddAction', () => {
     let appEmitter: AppEmitter;
@@ -47,7 +47,7 @@ describe('EventAddAction', () => {
                 appEmitter.emit(appEmitter.EVENT_INFO, ctx);
             });
 
-            const { params }: { params: IParams } = JSON.parse(jsonRes);
+            const {params}: {params: IParams} = JSON.parse(jsonRes);
             expect(params.status).toBe(statuses.STATUS_NO_EVENT);
         });
 
@@ -65,7 +65,7 @@ describe('EventAddAction', () => {
                     appEmitter.emit(appEmitter.EVENT_INFO, ctx);
                 });
 
-                const { params }: { params: IParams } = JSON.parse(jsonRes);
+                const {params}: {params: IParams} = JSON.parse(jsonRes);
                 expect(params.status).toBe(statuses.STATUS_SUCCESS);
             });
 
@@ -75,7 +75,7 @@ describe('EventAddAction', () => {
                     appEmitter.emit(appEmitter.EVENT_INFO, ctx);
                 });
 
-                const { data }: any = JSON.parse(jsonRes);
+                const {data}: any = JSON.parse(jsonRes);
                 expect(data.date).toMatch(/^\d{2}-\d{2}-\d{4}\s\d{2}:\d{2}$/);
             });
 
@@ -85,7 +85,7 @@ describe('EventAddAction', () => {
                     appEmitter.emit(appEmitter.EVENT_INFO, ctx);
                 });
 
-                const { data }: any = JSON.parse(jsonRes);
+                const {data}: any = JSON.parse(jsonRes);
                 expect(data.total).toBe(0);
                 expect(data.players).toStrictEqual([]);
             });

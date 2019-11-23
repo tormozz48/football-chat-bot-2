@@ -1,12 +1,12 @@
-import { createContextStub } from '../stubs/context.stub';
-import { createModuleStub } from '../stubs/actions.module.stub';
-import { clearDatabase } from '../helpers/db-helper';
+import {createContextStub} from '../stubs/context.stub';
+import {createModuleStub} from '../stubs/actions.module.stub';
+import {clearDatabase} from '../helpers/db-helper';
 
-import { AppEmitter } from '../../src/common/event-bus.service';
-import { StorageService } from '../../src/storage/storage.service';
+import {AppEmitter} from '../../src/common/event-bus.service';
+import {StorageService} from '../../src/storage/storage.service';
 import * as statuses from '../../src/actions/statuses';
-import { Chat } from '../../src/storage/models/chat';
-import { IParams } from '../../src/common/template.service';
+import {Chat} from '../../src/storage/models/chat';
+import {IParams} from '../../src/common/template.service';
 
 describe('PlayerRemoveAction', () => {
     let appEmitter: AppEmitter;
@@ -31,11 +31,8 @@ describe('PlayerRemoveAction', () => {
             expect(chatCountBefore).toBe(0);
 
             await new Promise(resolve => {
-                const ctx = createContextStub(
-                    { lang: 'en', chatId: 1 },
-                    resolve,
-                );
-                appEmitter.emit(appEmitter.PERSON_ADD, ctx);
+                const ctx = createContextStub({lang: 'en', chatId: 1}, resolve);
+                appEmitter.emit(appEmitter.PERSON_REMOVE, ctx);
             });
 
             const chatCountAfter: number = await storageService.connection
@@ -46,14 +43,11 @@ describe('PlayerRemoveAction', () => {
 
         it('should return no_event response if active event was not found', async () => {
             const jsonRes: string = await new Promise(resolve => {
-                const ctx = createContextStub(
-                    { lang: 'en', chatId: 1 },
-                    resolve,
-                );
-                appEmitter.emit(appEmitter.PERSON_ADD, ctx);
+                const ctx = createContextStub({lang: 'en', chatId: 1}, resolve);
+                appEmitter.emit(appEmitter.PERSON_REMOVE, ctx);
             });
 
-            const { params }: { params: IParams } = JSON.parse(jsonRes);
+            const {params}: {params: IParams} = JSON.parse(jsonRes);
             expect(params.status).toBe(statuses.STATUS_NO_EVENT);
         });
 
@@ -61,7 +55,7 @@ describe('PlayerRemoveAction', () => {
             beforeEach(async () => {
                 await new Promise(resolve => {
                     const ctx = createContextStub(
-                        { lang: 'en', chatId: 1 },
+                        {lang: 'en', chatId: 1},
                         resolve,
                     );
                     appEmitter.emit(appEmitter.EVENT_ADD, ctx);

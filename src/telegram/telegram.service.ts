@@ -1,9 +1,9 @@
 import Telegraf from 'telegraf';
 
-import { Injectable } from '@nestjs/common';
+import {Injectable} from '@nestjs/common';
 import * as SocksAgent from 'socks5-https-client/lib/Agent';
-import { ConfigService } from '../common/config.service';
-import { AppEmitter } from '../common/event-bus.service';
+import {ConfigService} from '../common/config.service';
+import {AppEmitter} from '../common/event-bus.service';
 
 @Injectable()
 export class TelegramService {
@@ -14,7 +14,7 @@ export class TelegramService {
 
         this.bot = config.get('TELEGRAM_USE_PROXY')
             ? new Telegraf(botToken, {
-                  telegram: { agent: this.getProxy(config) },
+                  telegram: {agent: this.getProxy(config)},
               })
             : new Telegraf(botToken);
 
