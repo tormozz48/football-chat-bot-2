@@ -47,14 +47,36 @@ export class BaseAction {
         this.appEmitter.on(this.event, this.handleEvent.bind(this));
     }
 
+    /**
+     * Set event for action.
+     * This method must be overrided in child class
+     * @protected
+     * @memberOf BaseAction
+     */
     protected setEvent(): void {
         throw new Error('not implemented');
     }
 
+    /**
+     * Implements action logic.
+     * This method must be overrided in child class
+     * @protected
+     * @param {IDoActionParams} params
+     * @returns {Promise<IActionResult>}
+     * @memberOf BaseAction
+     */
     protected async doAction(params: IDoActionParams): Promise<IActionResult> {
         throw new Error('not implemented');
     }
 
+    /**
+     * Creates action result by status and attached data
+     * @protected
+     * @param {string} status
+     * @param {*} [data]
+     * @returns {IActionResult}
+     * @memberOf BaseAction
+     */
     protected createActionResult(status: string, data?: any): IActionResult {
         return {status, data} as IActionResult;
     }

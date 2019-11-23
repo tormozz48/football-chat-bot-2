@@ -11,10 +11,10 @@ describe('EventAddAction', () => {
     let storageService: StorageService;
 
     beforeAll(async () => {
-        const module = await createModuleStub();
+        const testModule = await createModuleStub();
 
-        appEmitter = module.get<AppEmitter>(AppEmitter);
-        storageService = module.get<StorageService>(StorageService);
+        appEmitter = testModule.get<AppEmitter>(AppEmitter);
+        storageService = testModule.get<StorageService>(StorageService);
     });
 
     beforeEach(async () => {
@@ -81,8 +81,8 @@ describe('EventAddAction', () => {
                 appEmitter.emit(appEmitter.EVENT_ADD, ctx);
             });
 
-            const {date} = JSON.parse(jsonRes);
-            expect(date).toMatch(/^\d{2}-\d{2}-\d{4}\s\d{2}:\d{2}$/);
+            const {data} = JSON.parse(jsonRes);
+            expect(data.date).toMatch(/^\d{2}-\d{2}-\d{4}\s\d{2}:\d{2}$/);
         });
     });
 });
