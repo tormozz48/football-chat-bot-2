@@ -14,6 +14,6 @@ export const getEventDate = (): Date => {
         .toDate();
 };
 
-export const formatEventDate = (date: Date|string): string => {
+export const formatEventDate = (date: Date | string): string => {
     return moment.utc(date).format('DD-MM-YYYY HH:mm');
 };

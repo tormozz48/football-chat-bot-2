@@ -1,4 +1,6 @@
-export const createContextStub = ({lang, chatId}, callback) => {
+export const createContextStub = (params: any, callback) => {
+    const { lang = 'en', chatId = 1, firstName, lastName, text = '' } = params;
+
     return {
         update: {
             message: {
@@ -7,7 +9,10 @@ export const createContextStub = ({lang, chatId}, callback) => {
                 },
                 from: {
                     language_code: lang,
+                    first_name: firstName,
+                    last_name: lastName,
                 },
+                text,
             },
         },
         replyWithHTML: (...args) => callback(...args),

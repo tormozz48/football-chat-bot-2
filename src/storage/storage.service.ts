@@ -30,7 +30,7 @@ export class StorageService {
      * @memberOf StorageService
      */
     public async ensureChat(chatId: number): Promise<Chat> {
-        let chat: Chat = await this.chatRepository.findOne({chatId});
+        let chat: Chat = await this.chatRepository.findOne({ chatId });
 
         if (chat) {
             return chat;
@@ -52,7 +52,7 @@ export class StorageService {
         return this.dbConnection
             .createQueryBuilder()
             .update(Event)
-            .set({active: false})
+            .set({ active: false })
             .where('chatId = :chatId', { chatId })
             .execute();
     }
@@ -79,7 +79,7 @@ export class StorageService {
      * @returns {(Promise<Event|null>)}
      * @memberOf StorageService
      */
-    public findChatActiveEvent(chat: Chat): Promise<Event|null> {
+    public findChatActiveEvent(chat: Chat): Promise<Event | null> {
         return this.eventRepository.findOne({
             where: {
                 chatId: chat.chatId,
@@ -109,7 +109,7 @@ export class StorageService {
      * @returns {(Promise<Player|null>)}
      * @memberOf StorageService
      */
-    public findPlayer(event: Event, name: string): Promise<Player|null> {
+    public findPlayer(event: Event, name: string): Promise<Player | null> {
         return this.playerRepository.findOne({
             where: {
                 eventId: event.id,

@@ -1,9 +1,14 @@
-import {Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn} from 'typeorm';
-import {Event} from './event';
+import {
+    Entity,
+    PrimaryGeneratedColumn,
+    Column,
+    ManyToOne,
+    JoinColumn,
+} from 'typeorm';
+import { Event } from './event';
 
 @Entity()
 export class Player {
-
     @PrimaryGeneratedColumn()
     id: number;
 

@@ -1,4 +1,4 @@
-import { Injectable} from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 
 import * as statuses from './statuses';
 import { formatEventDate } from '../common/utils';
@@ -12,7 +12,9 @@ export class EventRemoveAction extends BaseAction {
     }
 
     protected async doAction(params: IDoActionParams): Promise<IActionResult> {
-        const activeEvent: Event = await this.storageService.findChatActiveEvent(params.chat);
+        const activeEvent: Event = await this.storageService.findChatActiveEvent(
+            params.chat,
+        );
         await this.storageService.markChatEventsInactive(params.chat.id);
 
         if (activeEvent) {

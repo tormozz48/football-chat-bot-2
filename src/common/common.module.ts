@@ -1,4 +1,4 @@
-import { Module, Logger} from '@nestjs/common';
+import { Module, Logger } from '@nestjs/common';
 import { ConfigService } from './config.service';
 import { AppEmitter } from './event-bus.service';
 import { TemplateService } from './template.service';
@@ -7,7 +7,9 @@ import { TemplateService } from './template.service';
     providers: [
         {
             provide: ConfigService,
-            useValue: new ConfigService(`${process.env.NODE_ENV || 'development'}.env`),
+            useValue: new ConfigService(
+                `${process.env.NODE_ENV || 'development'}.env`,
+            ),
         },
         {
             provide: AppEmitter,
@@ -18,7 +20,6 @@ import { TemplateService } from './template.service';
             useValue: new Logger(),
         },
         TemplateService,
-
     ],
     exports: [ConfigService, AppEmitter, Logger, TemplateService],
 })

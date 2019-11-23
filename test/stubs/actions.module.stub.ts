@@ -12,17 +12,16 @@ import { PlayerAddAction } from '../../src/actions/player_add.action';
 import { PlayerRemoveAction } from '../../src/actions/player_remove.action';
 
 export const createModuleStub = () => {
-    return Test
-        .createTestingModule({
-            imports: [CommonModule, StorageModule],
-            providers: [
-                EventAddAction,
-                EventRemoveAction,
-                EventInfoAction,
-                PlayerAddAction,
-                PlayerRemoveAction,
-            ],
-        })
+    return Test.createTestingModule({
+        imports: [CommonModule, StorageModule],
+        providers: [
+            EventAddAction,
+            EventRemoveAction,
+            EventInfoAction,
+            PlayerAddAction,
+            PlayerRemoveAction,
+        ],
+    })
         .overrideProvider(TemplateService)
         .useClass(TemplateServiceStub)
         .compile();

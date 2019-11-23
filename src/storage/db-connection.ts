@@ -2,9 +2,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { DynamicModule } from '@nestjs/common';
 
 const commonOptions = {
-    entities: [
-        __dirname + '/models/*{.ts,.js}',
-    ],
+    entities: [__dirname + '/models/*{.ts,.js}'],
     synchronize: true,
     logging: false,
 };

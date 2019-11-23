@@ -1,4 +1,4 @@
-import { Injectable} from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 
 import * as statuses from './statuses';
 import { getEventDate, formatEventDate } from '../common/utils';
@@ -14,7 +14,10 @@ export class EventAddAction extends BaseAction {
     protected async doAction(params: IDoActionParams): Promise<IActionResult> {
         await this.storageService.markChatEventsInactive(params.chat.id);
         const eventDate: Date = getEventDate();
-        const event: Event = await this.storageService.appendChatActiveEvent(params.chat, eventDate);
+        const event: Event = await this.storageService.appendChatActiveEvent(
+            params.chat,
+            eventDate,
+        );
 
         return this.createActionResult(statuses.STATUS_SUCCESS, {
             date: formatEventDate(event.date),

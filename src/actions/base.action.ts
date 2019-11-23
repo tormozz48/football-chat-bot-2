@@ -1,4 +1,4 @@
-import { Injectable, Logger} from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '../common/config.service';
 import { AppEmitter } from '../common/event-bus.service';
 import { TemplateService } from '../common/template.service';
@@ -78,7 +78,7 @@ export class BaseAction {
      * @memberOf BaseAction
      */
     protected createActionResult(status: string, data?: any): IActionResult {
-        return {status, data} as IActionResult;
+        return { status, data } as IActionResult;
     }
 
     private async handleEvent(ctx) {
@@ -90,13 +90,22 @@ export class BaseAction {
             const chatId: number = message.chat.id;
             const chat: Chat = await this.storageService.ensureChat(chatId);
 
-            const result: IActionResult = await this.doAction({chat, lang, message});
-
-            ctx.replyWithHTML(this.templateService.apply({
-                action: this.event,
-                status: result.status,
+            const result: IActionResult = await this.doAction({
+                chat,
                 lang,
-            }, result.data || {}));
+                message,
+            });
+
+            ctx.replyWithHTML(
+                this.templateService.apply(
+                    {
+                        action: this.event,
+                        status: result.status,
+                        lang,
+                    },
+                    result.data || {},
+                ),
+            );
         } catch (error) {
             this.logger.error(error);
             ctx.replyWithHTML(error.message);

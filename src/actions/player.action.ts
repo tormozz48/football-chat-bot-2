@@ -17,7 +17,7 @@ export class PlayerAction extends BaseAction {
      */
     protected resolveName(message): string {
         const targetName: string = message.text.replace(/^\/add\S*/, '').trim();
-        const {first_name: firstName, last_name: lastName} = message.from;
+        const { first_name: firstName, last_name: lastName } = message.from;
 
         return targetName.length > 0
             ? targetName

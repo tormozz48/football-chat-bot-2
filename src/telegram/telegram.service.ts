@@ -13,14 +13,26 @@ export class TelegramService {
         const botToken: string = config.get('TELEGRAM_BOT_TOKEN');
 
         this.bot = config.get('TELEGRAM_USE_PROXY')
-            ? new Telegraf(botToken, {telegram: {agent: this.getProxy(config)}})
+            ? new Telegraf(botToken, {
+                  telegram: { agent: this.getProxy(config) },
+              })
             : new Telegraf(botToken);
 
-        this.bot.command('event_add', (...args) => appEmitter.emit(appEmitter.EVENT_ADD, ...args));
-        this.bot.command('info', (...args) => appEmitter.emit(appEmitter.EVENT_INFO, ...args));
-        this.bot.command('event_remove', (...args) => appEmitter.emit(appEmitter.EVENT_REMOVE, ...args));
-        this.bot.command('add', (...args) => appEmitter.emit(appEmitter.PERSON_ADD, ...args));
-        this.bot.command('remove', (...args) => appEmitter.emit(appEmitter.PERSON_REMOVE, ...args));
+        this.bot.command('event_add', (...args) =>
+            appEmitter.emit(appEmitter.EVENT_ADD, ...args),
+        );
+        this.bot.command('info', (...args) =>
+            appEmitter.emit(appEmitter.EVENT_INFO, ...args),
+        );
+        this.bot.command('event_remove', (...args) =>
+            appEmitter.emit(appEmitter.EVENT_REMOVE, ...args),
+        );
+        this.bot.command('add', (...args) =>
+            appEmitter.emit(appEmitter.PERSON_ADD, ...args),
+        );
+        this.bot.command('remove', (...args) =>
+            appEmitter.emit(appEmitter.PERSON_REMOVE, ...args),
+        );
     }
 
     public launch(): void {
