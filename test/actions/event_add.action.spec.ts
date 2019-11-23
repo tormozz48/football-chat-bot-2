@@ -1,10 +1,10 @@
-import { createContextStub } from '../../test/stubs/context.stub';
-import { createModuleStub } from '../../test/stubs/actions.module.stub';
+import { createContextStub } from '../stubs/context.stub';
+import { createModuleStub } from '../stubs/actions.module.stub';
 
-import { AppEmitter } from '../common/event-bus.service';
-import { StorageService } from '../storage/storage.service';
-import { Chat } from '../storage/models/chat';
-import { Event } from '../storage/models/event';
+import { AppEmitter } from '../../src/common/event-bus.service';
+import { StorageService } from '../../src/storage/storage.service';
+import { Chat } from '../../src/storage/models/chat';
+import { Event } from '../../src/storage/models/event';
 
 describe('EventAddAction', () => {
     let appEmitter: AppEmitter;

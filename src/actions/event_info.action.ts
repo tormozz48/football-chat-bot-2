@@ -1,4 +1,6 @@
 import { Injectable} from '@nestjs/common';
+
+import * as statuses from './statuses';
 import { formatEventDate } from '../common/utils';
 import { BaseAction, IDoActionParams, IActionResult } from './base.action';
 import { Event } from '../storage/models/event';
@@ -14,21 +16,18 @@ export class EventInfoAction extends BaseAction {
         const activeEvent: Event = await this.storageService.findChatActiveEvent(params.chat);
 
         if (!activeEvent) {
-            return {status: 'no_event'} as IActionResult;
+            return this.createActionResult(statuses.STATUS_NO_EVENT);
         }
 
         const players: Player[] = await this.storageService.getPlayers(activeEvent);
 
-        return {
-            status: this.STATUS_SUCCESS,
-            data: {
-                date: formatEventDate(activeEvent.date),
-                total: players.length,
-                players: players.map((player, index) => ({
-                    index: index + 1,
-                    name: player.name,
-                })),
-            },
-        } as IActionResult;
+        return this.createActionResult(statuses.STATUS_SUCCESS, {
+            date: formatEventDate(activeEvent.date),
+            total: players.length,
+            players: players.map((player, index) => ({
+                index: index + 1,
+                name: player.name,
+            })),
+        });
     }
 }

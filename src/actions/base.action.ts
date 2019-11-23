@@ -18,9 +18,6 @@ export interface IActionResult {
 
 @Injectable()
 export class BaseAction {
-    protected readonly STATUS_SUCCESS: string = 'success';
-    protected readonly STATUS_FAIL: string = 'fail';
-
     protected appEmitter: AppEmitter;
     protected config: ConfigService;
     protected logger: Logger;
@@ -56,6 +53,10 @@ export class BaseAction {
 
     protected async doAction(params: IDoActionParams): Promise<IActionResult> {
         throw new Error('not implemented');
+    }
+
+    protected createActionResult(status: string, data?: any): IActionResult {
+        return {status, data} as IActionResult;
     }
 
     private async handleEvent(ctx) {

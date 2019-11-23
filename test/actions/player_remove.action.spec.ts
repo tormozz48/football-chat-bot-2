@@ -1,11 +1,11 @@
 import { Test } from '@nestjs/testing';
-import { CommonModule } from '../common/common.module';
-import { StorageModule } from '../storage/storage.module';
-import { AppEmitter } from '../common/event-bus.service';
-import { TemplateService } from '../common/template.service';
-import { TemplateServiceStub } from '../../test/stubs/template.service.stub';
+import { CommonModule } from '../../src/common/common.module';
+import { StorageModule } from '../../src/storage/storage.module';
+import { AppEmitter } from '../../src/common/event-bus.service';
+import { TemplateService } from '../../src/common/template.service';
+import { TemplateServiceStub } from '../stubs/template.service.stub';
 
-import { PlayerRemoveAction } from './player_remove.action';
+import { PlayerRemoveAction } from '../../src/actions/player_remove.action';
 
 describe('PlayerRemoveAction', () => {
     let playerRemoveAction: PlayerRemoveAction;

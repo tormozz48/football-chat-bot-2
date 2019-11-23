@@ -1,4 +1,6 @@
 import { Injectable} from '@nestjs/common';
+
+import * as statuses from './statuses';
 import { IDoActionParams, IActionResult } from './base.action';
 import { PlayerAction } from './player.action';
 import { Event } from '../storage/models/event';
@@ -14,24 +16,21 @@ export class PlayerRemoveAction extends PlayerAction {
         const activeEvent: Event = await this.storageService.findChatActiveEvent(params.chat);
 
         if (!activeEvent) {
-            return {status: 'no_event'} as IActionResult;
+            return this.createActionResult(statuses.STATUS_NO_EVENT);
         }
 
         const name: string = this.resolveName(params.message);
         const existedPlayer: Player = await this.storageService.findPlayer(activeEvent, name);
 
         if (!existedPlayer) {
-            return {status: 'no_player', data: {name}} as IActionResult;
+            return this.createActionResult(statuses.STATUS_NO_PLAYER, {name});
         }
 
         await this.storageService.removePlayer(existedPlayer);
 
-        return {
-            status: this.STATUS_SUCCESS,
-            data: {
-                name,
-                ...await this.getPlayersList(activeEvent),
-            },
-        };
+        return this.createActionResult(statuses.STATUS_SUCCESS, {
+            name,
+            ...await this.getPlayersList(activeEvent),
+        });
     }
 }
