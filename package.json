@@ -51,16 +51,12 @@
   },
   "homepage": "https://github.com/tormozz48/football-chat-bot-2#readme",
   "jest": {
-    "moduleFileExtensions": [
-      "js",
-      "json",
-      "ts"
-    ],
-    "rootDir": "test",
+    "moduleFileExtensions": ["js","json","ts"],
+    "rootDir": ".",
     "testRegex": ".spec.ts$",
-    "transform": {
-      "^.+\\.(t|j)s$": "ts-jest"
-    },
+    "maxConcurrency": 1,
+    "transform": {"^.+\\.(t|j)s$": "ts-jest"},
+    "collectCoverageFrom": ["**/*.ts", "!**/*.d.ts"],
     "coverageDirectory": "./coverage",
     "testEnvironment": "node"
   },
