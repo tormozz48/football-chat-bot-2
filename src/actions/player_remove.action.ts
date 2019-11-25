@@ -1,10 +1,11 @@
 import {Injectable} from '@nestjs/common';
 
 import * as statuses from './statuses';
-import {IDoActionParams, IActionResult} from './base.action';
 import {PlayerAction} from './player.action';
+import {Chat} from '../storage/models/chat';
 import {Event} from '../storage/models/event';
 import {Player} from 'src/storage/models/player';
+import {IMessage} from 'src/message/i-message';
 
 @Injectable()
 export class PlayerRemoveAction extends PlayerAction {
@@ -12,30 +13,29 @@ export class PlayerRemoveAction extends PlayerAction {
         this.event = this.appEmitter.PERSON_REMOVE;
     }
 
-    protected async doAction(params: IDoActionParams): Promise<IActionResult> {
-        const activeEvent: Event = await this.storageService.findChatActiveEvent(
-            params.chat,
-        );
+    protected async doAction(chat: Chat, message: IMessage): Promise<IMessage> {
+        const activeEvent: Event = await this.storageService.findChatActiveEvent(chat);
 
         if (!activeEvent) {
-            return this.createActionResult(statuses.STATUS_NO_EVENT);
+            return message.setStatus(statuses.STATUS_NO_EVENT);
         }
 
-        const name: string = this.resolveName(params.message);
-        const existedPlayer: Player = await this.storageService.findPlayer(
-            activeEvent,
-            name,
-        );
+        const name: string = message.name;
+        const existedPlayer: Player = await this.storageService.findPlayer(activeEvent, name);
 
         if (!existedPlayer) {
-            return this.createActionResult(statuses.STATUS_NO_PLAYER, {name});
+            return message
+                .setStatus(statuses.STATUS_NO_PLAYER)
+                .withData({name});
         }
 
         await this.storageService.removePlayer(existedPlayer);
 
-        return this.createActionResult(statuses.STATUS_SUCCESS, {
-            name,
-            ...(await this.getPlayersList(activeEvent)),
-        });
+        return message
+            .setStatus(statuses.STATUS_SUCCESS)
+            .withData({
+                name,
+                ...(await this.getPlayersList(activeEvent)),
+            });
     }
 }

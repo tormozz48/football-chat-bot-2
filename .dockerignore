@@ -1,0 +1,11 @@
+.vscode
+.git
+.git
+.github
+.history
+.travis.yml
+node_modules
+npm-debug.log
+coverage
+dist
+test

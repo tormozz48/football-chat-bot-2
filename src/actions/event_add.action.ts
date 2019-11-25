@@ -2,8 +2,10 @@ import {Injectable} from '@nestjs/common';
 
 import * as statuses from './statuses';
 import {getEventDate, formatEventDate} from '../common/utils';
-import {BaseAction, IDoActionParams, IActionResult} from './base.action';
-import {Event} from 'src/storage/models/event';
+import {BaseAction} from './base.action';
+import {Chat} from '../storage/models/chat';
+import {Event} from '../storage/models/event';
+import {IMessage} from '../message/i-message';
 
 @Injectable()
 export class EventAddAction extends BaseAction {
@@ -11,16 +13,15 @@ export class EventAddAction extends BaseAction {
         this.event = this.appEmitter.EVENT_ADD;
     }
 
-    protected async doAction(params: IDoActionParams): Promise<IActionResult> {
-        await this.storageService.markChatEventsInactive(params.chat.id);
-        const eventDate: Date = getEventDate();
-        const event: Event = await this.storageService.appendChatActiveEvent(
-            params.chat,
-            eventDate,
-        );
+    protected async doAction(chat: Chat, message: IMessage): Promise<IMessage> {
+        await this.storageService.markChatEventsInactive(chat.id);
+        const eventDate: Date = getEventDate(); // TODO parse date from message
+        const event: Event = await this.storageService.appendChatActiveEvent(chat, eventDate);
 
-        return this.createActionResult(statuses.STATUS_SUCCESS, {
-            date: formatEventDate(event.date),
-        });
+        return message
+            .setStatus(statuses.STATUS_SUCCESS)
+            .withData({
+                date: formatEventDate(event.date),
+            });
     }
 }

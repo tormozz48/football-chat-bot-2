@@ -1,7 +1,9 @@
+import {TelegramMessage} from '../../src/telegram/telegram.message';
+
 export const createContextStub = (params: any, callback) => {
     const {lang = 'en', chatId = 1, firstName, lastName, text = ''} = params;
 
-    return {
+    return new TelegramMessage({
         update: {
             message: {
                 chat: {
@@ -16,5 +18,5 @@ export const createContextStub = (params: any, callback) => {
             },
         },
         replyWithHTML: (...args) => callback(...args),
-    };
+    });
 };

@@ -4,6 +4,7 @@ import {Injectable} from '@nestjs/common';
 import * as SocksAgent from 'socks5-https-client/lib/Agent';
 import {ConfigService} from '../common/config.service';
 import {AppEmitter} from '../common/event-bus.service';
+import {TelegramMessage} from './telegram.message';
 
 @Injectable()
 export class TelegramService {
@@ -18,27 +19,22 @@ export class TelegramService {
               })
             : new Telegraf(botToken);
 
-        this.bot.command('event_add', (...args) =>
-            appEmitter.emit(appEmitter.EVENT_ADD, ...args),
-        );
-        this.bot.command('info', (...args) =>
-            appEmitter.emit(appEmitter.EVENT_INFO, ...args),
-        );
-        this.bot.command('event_remove', (...args) =>
-            appEmitter.emit(appEmitter.EVENT_REMOVE, ...args),
-        );
-        this.bot.command('add', (...args) =>
-            appEmitter.emit(appEmitter.PERSON_ADD, ...args),
-        );
-        this.bot.command('remove', (...args) =>
-            appEmitter.emit(appEmitter.PERSON_REMOVE, ...args),
-        );
+        this.getCommandEventMapping(appEmitter).forEach(([command, event]) => {
+            this.bot.command(command, (ctx) => appEmitter.emit(event, new TelegramMessage(ctx)));
+        });
     }
 
     public launch(): void {
         this.bot.launch();
     }
 
+    /**
+     * Returns proxy instance for telegram bot
+     * @private
+     * @param {ConfigService} config
+     * @returns {SocksAgent}
+     * @memberOf TelegramService
+     */
     private getProxy(config: ConfigService): SocksAgent {
         return new SocksAgent({
             socksHost: config.get('TELEGRAM_PROXY_HOST'),
@@ -46,5 +42,22 @@ export class TelegramService {
             socksUsername: config.get('TELEGRAM_PROXY_LOGIN'),
             socksPassword: config.get('TELEGRAM_PROXY_PASSWORD'),
         });
+    }
+
+    /**
+     * Returns mapping structure that links commands and corresponded events
+     * @private
+     * @param {AppEmitter} appEmitter
+     * @returns {Array<[string, string]>}
+     * @memberOf TelegramService
+     */
+    private getCommandEventMapping(appEmitter: AppEmitter): Array<[string, string]> {
+        return [
+            ['event_add', appEmitter.EVENT_ADD],
+            ['event_remove', appEmitter.EVENT_REMOVE],
+            ['info', appEmitter.EVENT_INFO],
+            ['add', appEmitter.PERSON_ADD],
+            ['remove', appEmitter.PERSON_REMOVE],
+        ];
     }
 }

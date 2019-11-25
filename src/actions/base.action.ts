@@ -1,20 +1,10 @@
 import {Injectable, Logger} from '@nestjs/common';
+import {IMessage} from '../message/i-message';
 import {ConfigService} from '../common/config.service';
 import {AppEmitter} from '../common/event-bus.service';
 import {TemplateService} from '../common/template.service';
 import {StorageService} from '../storage/storage.service';
 import {Chat} from '../storage/models/chat';
-
-export interface IDoActionParams {
-    chat: Chat;
-    lang: string;
-    message?: any;
-}
-
-export interface IActionResult {
-    status: string;
-    data?: any;
-}
 
 @Injectable()
 export class BaseAction {
@@ -61,54 +51,36 @@ export class BaseAction {
      * Implements action logic.
      * This method must be overrided in child class
      * @protected
-     * @param {IDoActionParams} params
-     * @returns {Promise<IActionResult>}
+     * @param {Chat} chat
+     * @param {IMessage} message
+     * @returns {Promise<IMessage>}
      * @memberOf BaseAction
      */
-    protected async doAction(params: IDoActionParams): Promise<IActionResult> {
+    protected async doAction(chat: Chat, message: IMessage): Promise<IMessage> {
         throw new Error('not implemented');
     }
 
-    /**
-     * Creates action result by status and attached data
-     * @protected
-     * @param {string} status
-     * @param {*} [data]
-     * @returns {IActionResult}
-     * @memberOf BaseAction
-     */
-    protected createActionResult(status: string, data?: any): IActionResult {
-        return {status, data} as IActionResult;
-    }
-
-    private async handleEvent(ctx) {
+    private async handleEvent(message: IMessage) {
         try {
             this.logger.log(`"${this.event}" event received`);
 
-            const message = ctx.update.message;
-            const lang: string = message.from.language_code;
-            const chatId: number = message.chat.id;
+            const chatId: number = message.chatId;
             const chat: Chat = await this.storageService.ensureChat(chatId);
+            message = await this.doAction(chat, message);
 
-            const result: IActionResult = await this.doAction({
-                chat,
-                lang,
-                message,
-            });
-
-            ctx.replyWithHTML(
+            message.answer(
                 this.templateService.apply(
                     {
                         action: this.event,
-                        status: result.status,
-                        lang,
+                        status: message.getReplyStatus(),
+                        lang: message.lang,
                     },
-                    result.data || {},
+                    message.getReplyData(),
                 ),
             );
         } catch (error) {
             this.logger.error(error);
-            ctx.replyWithHTML(error.message);
+            message.answer(error.message);
         }
     }
 }

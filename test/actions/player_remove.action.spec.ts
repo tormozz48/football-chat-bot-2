@@ -13,10 +13,10 @@ describe('PlayerRemoveAction', () => {
     let storageService: StorageService;
 
     beforeAll(async () => {
-        const module = await createModuleStub();
+        const testModule = await createModuleStub();
 
-        appEmitter = module.get<AppEmitter>(AppEmitter);
-        storageService = module.get<StorageService>(StorageService);
+        appEmitter = testModule.get<AppEmitter>(AppEmitter);
+        storageService = testModule.get<StorageService>(StorageService);
     });
 
     beforeEach(async () => {
