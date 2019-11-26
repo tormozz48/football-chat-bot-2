@@ -6,16 +6,49 @@ Football chat bot build with NestJS framework
 
 ## Install
 
+1. Clone repository to your local filesystem from github:
+```bash
+git clone https://github.com/tormozz48/football-chat-bot-2.git
+```
+2. Install npm dependencies:
+```bash
+npm install
+```
+3. Set up all environment variables.
+Also you can create {NODE_ENV}.env file, for example:
+* `devevopment.env` for NODE_ENV=development
+* `production.env` for NODE_ENV=production
+and fill them with environment variables described in "Configuration" section.
+
+4. Launch application server:
+```bash
+npm start
+```
+
 ## Configuration
 
 Configuration is performed by modifying these environment variables:
 
 * `TELEGRAM_BOT_TOKEN` - unique telegram bot token string
-* `TELEGRAM_USE_PROXY` -
+* `TELEGRAM_USE_PROXY` - true/false. If set to true then application will establish connection with telegram server via proxy.
 * `TELEGRAM_PROXY_HOST` - proxy server host
 * `TELEGRAM_PROXY_PORT` - proxy server port
 * `TELEGRAM_PROXY_LOGIN` - proxy auth login
 * `TELEGRAM_PROXY_PASSWORD` - proxy auth password
+
+## Development
+
+Configured commands:
+* `npm run build` - compile TypeScript source code into js distributive.
+* `npm run format` - perform code formatting via prettier tool.
+* `npm start` - run application server
+* `npm start:dev` - run application in "watch mode". Restart after source code chages.
+* `npm start:debug` - run application in both "watch" and "debug" modes.
+* `npm start:prod` - run application in production mode.
+* `npm run lint` - perform code linting via tslint tool.
+* `npm test` - run tests.
+* `npm test:watch` - run tests in "watch mode".
+* `npm test:cov` - run tests and calculate code coverage.
 
 ## Third-party software
 
