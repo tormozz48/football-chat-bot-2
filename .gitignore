@@ -1,7 +1,7 @@
 .history
 .idea
 *.env
+*.sqlite
 node_modules
 dist
-test.sqlite
 coverage

@@ -21,7 +21,7 @@ export class TelegramMessage extends BaseMessage implements IMessage {
     }
 
     get name(): string {
-        const targetName: string = this.text.replace(/^\/add\S*/, '').trim();
+        const targetName: string = this.text.replace(/^\/(add|remove)\S*/, '').trim();
 
         return targetName.length > 0
             ? targetName
