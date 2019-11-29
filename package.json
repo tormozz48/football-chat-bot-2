@@ -50,6 +50,9 @@
     "url": "https://github.com/tormozz48/football-chat-bot-2/issues"
   },
   "homepage": "https://github.com/tormozz48/football-chat-bot-2#readme",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
   "jest": {
     "moduleFileExtensions": ["js","json","ts"],
     "rootDir": ".",
