@@ -15,6 +15,7 @@ jobs:
     steps:
       - name: Login to docker.io
         run:  echo ${{ secrets.DOCKER_PWD }} | docker login -u ${{ secrets.DOCKER_LOGIN }} --password-stdin
+      - name: Checkout
         uses: actions/checkout@master
       - name: Use Node.js 10.x
         uses: actions/setup-node@v1
