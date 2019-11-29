@@ -2,10 +2,13 @@ import * as dotenv from 'dotenv';
 import * as fs from 'fs';
 
 export class ConfigService {
+    private readonly CONFIG_FILE_NAME: string = '.env';
     private readonly envConfig: Record<string, string>;
 
     constructor() {
-        this.envConfig = dotenv.parse(fs.readFileSync('.env'));
+        if (fs.existsSync(this.CONFIG_FILE_NAME)) {
+            this.envConfig = dotenv.parse(fs.readFileSync(this.CONFIG_FILE_NAME));
+        }
     }
 
     /**
