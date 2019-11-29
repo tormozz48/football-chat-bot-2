@@ -13,6 +13,12 @@ jobs:
     env:
       LOGIN: ${{ secrets.DOCKER_LOGIN }}
       NAME: ${{ secrets.DOCKER_NAME }}
+      TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+      TELEGRAM_USE_PROXY: ${{ secrets.TELEGRAM_USE_PROXY }}
+      TELEGRAM_PROXY_HOST: ${{ secrets.TELEGRAM_PROXY_HOST }}
+      TELEGRAM_PROXY_PORT: ${{ secrets.TELEGRAM_PROXY_PORT }}
+      TELEGRAM_PROXY_LOGIN: ${{ secrets.TELEGRAM_PROXY_LOGIN }}
+      TELEGRAM_PROXY_PASSWORD: ${{ secrets.TELEGRAM_PROXY_PASSWORD }}
 
     steps:
     - uses: actions/checkout@v1
