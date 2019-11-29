@@ -14,7 +14,8 @@
     "lint": "tslint -p tsconfig.json -c tslint.json",
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:cov": "jest --coverage"
+    "test:cov": "jest --coverage",
+    "env:generate": "node gen-env.js"
   },
   "husky": {
     "hooks": {
@@ -54,12 +55,21 @@
     "registry": "https://npm.pkg.github.com/"
   },
   "jest": {
-    "moduleFileExtensions": ["js","json","ts"],
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts"
+    ],
     "rootDir": ".",
     "testRegex": ".spec.ts$",
     "maxConcurrency": 1,
-    "transform": {"^.+\\.(t|j)s$": "ts-jest"},
-    "collectCoverageFrom": ["**/*.ts", "!**/*.d.ts"],
+    "transform": {
+      "^.+\\.(t|j)s$": "ts-jest"
+    },
+    "collectCoverageFrom": [
+      "**/*.ts",
+      "!**/*.d.ts"
+    ],
     "coverageDirectory": "./coverage",
     "testEnvironment": "node"
   },
@@ -97,6 +107,7 @@
     "@types/node": "^12.7.5",
     "commitizen": "^4.0.3",
     "cz-customizable": "^6.2.0",
+    "envdot": "0.0.3",
     "husky": "^3.0.9",
     "jest": "^24.9.0",
     "prettier": "^1.18.2",

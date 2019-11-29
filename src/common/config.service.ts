@@ -4,10 +4,8 @@ import * as fs from 'fs';
 export class ConfigService {
     private readonly envConfig: Record<string, string>;
 
-    constructor(filePath: string) {
-        if (fs.existsSync(filePath)) {
-            this.envConfig = dotenv.parse(fs.readFileSync(filePath));
-        }
+    constructor() {
+        this.envConfig = dotenv.parse(fs.readFileSync('.env'));
     }
 
     /**

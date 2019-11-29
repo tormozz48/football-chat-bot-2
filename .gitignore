@@ -1,6 +1,7 @@
 .history
 .idea
 *.env
+!.env.dist
 *.sqlite
 node_modules
 dist

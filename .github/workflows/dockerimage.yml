@@ -1,24 +1,19 @@
 name: Release
 
 on:
-  push:
-    branches:
-      - master
-
-# on:
-#   release:
-#     types: [published]
+  release:
+    types: [published]
 
 jobs:
 
   build:
 
     runs-on: ubuntu-latest
-    
+
     env:
       LOGIN: ${{ secrets.DOCKER_LOGIN }}
       NAME: ${{ secrets.DOCKER_NAME }}
-    
+
     steps:
     - uses: actions/checkout@v1
     - name: Install Node.js
@@ -26,7 +21,7 @@ jobs:
     - name: Login to docker.io
       run:  echo ${{ secrets.DOCKER_PWD }} | docker login -u ${{ secrets.DOCKER_LOGIN }} --password-stdin
     - name: npm install and build
-      run: npm ci && npm run build --if-present
+      run: npm ci && npm run build --if-present && npm run env:generate
     - name: Build the Docker image
       run: docker build -t $LOGIN/$NAME:${GITHUB_REF:11} -f Dockerfile .
     - name: Push image to docker.io

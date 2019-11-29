@@ -1,4 +1,6 @@
-.*
+.github
+.history
+.vscode
 *.sqlite
 git
 node_modules
