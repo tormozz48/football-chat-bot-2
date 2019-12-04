@@ -56,8 +56,8 @@ export class TelegramService {
             ['event_add', appEmitter.EVENT_ADD],
             ['event_remove', appEmitter.EVENT_REMOVE],
             ['info', appEmitter.EVENT_INFO],
-            ['add', appEmitter.PERSON_ADD],
-            ['remove', appEmitter.PERSON_REMOVE],
+            ['add', appEmitter.PLAYER_ADD],
+            ['remove', appEmitter.PLAYER_REMOVE],
         ];
     }
 }

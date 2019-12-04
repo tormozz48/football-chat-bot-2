@@ -36,7 +36,7 @@ describe('PlayerAddAction', () => {
 
             await new Promise(resolve => {
                 const ctx = createContextStub({}, resolve);
-                appEmitter.emit(appEmitter.PERSON_ADD, ctx);
+                appEmitter.emit(appEmitter.PLAYER_ADD, ctx);
             });
 
             const chatCountAfter: number = await storageService.connection
@@ -48,7 +48,7 @@ describe('PlayerAddAction', () => {
         it('should return no_event response if active event was not found', async () => {
             const jsonRes: string = await new Promise(resolve => {
                 const ctx = createContextStub({}, resolve);
-                appEmitter.emit(appEmitter.PERSON_ADD, ctx);
+                appEmitter.emit(appEmitter.PLAYER_ADD, ctx);
             });
 
             const {params}: {params: IParams} = JSON.parse(jsonRes);
@@ -69,7 +69,7 @@ describe('PlayerAddAction', () => {
                         {text: 'John Smith'},
                         resolve,
                     );
-                    appEmitter.emit(appEmitter.PERSON_ADD, ctx);
+                    appEmitter.emit(appEmitter.PLAYER_ADD, ctx);
                 });
 
                 const players: Player[] = await storageService.connection
@@ -85,7 +85,7 @@ describe('PlayerAddAction', () => {
                             {firstName: 'John', lastName: 'Smith'},
                             resolve,
                         );
-                        appEmitter.emit(appEmitter.PERSON_ADD, ctx);
+                        appEmitter.emit(appEmitter.PLAYER_ADD, ctx);
                     });
 
                     const players: Player[] = await storageService.connection
@@ -100,7 +100,7 @@ describe('PlayerAddAction', () => {
                             {firstName: 'John'},
                             resolve,
                         );
-                        appEmitter.emit(appEmitter.PERSON_ADD, ctx);
+                        appEmitter.emit(appEmitter.PLAYER_ADD, ctx);
                     });
 
                     const players: Player[] = await storageService.connection
@@ -115,7 +115,7 @@ describe('PlayerAddAction', () => {
                             {lastName: 'Smith'},
                             resolve,
                         );
-                        appEmitter.emit(appEmitter.PERSON_ADD, ctx);
+                        appEmitter.emit(appEmitter.PLAYER_ADD, ctx);
                     });
 
                     const players: Player[] = await storageService.connection
@@ -131,7 +131,7 @@ describe('PlayerAddAction', () => {
                         {firstName: 'John', lastName: 'Smith'},
                         resolve,
                     );
-                    appEmitter.emit(appEmitter.PERSON_ADD, ctx);
+                    appEmitter.emit(appEmitter.PLAYER_ADD, ctx);
                 });
 
                 const {params}: {params: IParams} = JSON.parse(jsonRes);
@@ -144,7 +144,7 @@ describe('PlayerAddAction', () => {
                         {firstName: 'John', lastName: 'Smith'},
                         resolve,
                     );
-                    appEmitter.emit(appEmitter.PERSON_ADD, ctx);
+                    appEmitter.emit(appEmitter.PLAYER_ADD, ctx);
                 });
 
                 const {data} = JSON.parse(jsonRes);
@@ -157,7 +157,7 @@ describe('PlayerAddAction', () => {
                         {firstName: 'John', lastName: 'Smith'},
                         resolve,
                     );
-                    appEmitter.emit(appEmitter.PERSON_ADD, ctx);
+                    appEmitter.emit(appEmitter.PLAYER_ADD, ctx);
                 });
 
                 const {data} = JSON.parse(jsonRes);
@@ -172,7 +172,7 @@ describe('PlayerAddAction', () => {
                         {firstName: 'John', lastName: 'Smith'},
                         resolve,
                     );
-                    appEmitter.emit(appEmitter.PERSON_ADD, ctx);
+                    appEmitter.emit(appEmitter.PLAYER_ADD, ctx);
                 });
 
                 const jsonRes: string = await new Promise(resolve => {
@@ -180,7 +180,7 @@ describe('PlayerAddAction', () => {
                         {firstName: 'John', lastName: 'Smith'},
                         resolve,
                     );
-                    appEmitter.emit(appEmitter.PERSON_ADD, ctx);
+                    appEmitter.emit(appEmitter.PLAYER_ADD, ctx);
                 });
 
                 const {params}: {params: IParams} = JSON.parse(jsonRes);

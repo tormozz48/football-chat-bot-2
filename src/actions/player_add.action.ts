@@ -10,7 +10,7 @@ import {IMessage} from 'src/message/i-message';
 @Injectable()
 export class PlayerAddAction extends PlayerAction {
     protected setEvent(): void {
-        this.event = this.appEmitter.PERSON_ADD;
+        this.event = this.appEmitter.PLAYER_ADD;
     }
 
     protected async doAction(chat: Chat, message: IMessage): Promise<IMessage> {
