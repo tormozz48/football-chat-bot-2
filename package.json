@@ -12,8 +12,8 @@
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
     "lint": "tslint -p tsconfig.json -c tslint.json",
-    "test": "jest",
-    "test:watch": "jest --watch",
+    "test": "mocha -r ts-node/register test/**/*.spec.ts",
+    "test:watch": "npm test -- --watch --extension *.ts",
     "test:cov": "jest --coverage",
     "env:generate": "node gen-env.js"
   },
@@ -54,25 +54,6 @@
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
   },
-  "jest": {
-    "moduleFileExtensions": [
-      "js",
-      "json",
-      "ts"
-    ],
-    "rootDir": ".",
-    "testRegex": ".spec.ts$",
-    "maxConcurrency": 1,
-    "transform": {
-      "^.+\\.(t|j)s$": "ts-jest"
-    },
-    "collectCoverageFrom": [
-      "**/*.ts",
-      "!**/*.d.ts"
-    ],
-    "coverageDirectory": "./coverage",
-    "testEnvironment": "node"
-  },
   "dependencies": {
     "@nestjs/cli": "^6.12.2",
     "@nestjs/common": "^6.7.2",
@@ -99,21 +80,21 @@
   "devDependencies": {
     "@commitlint/cli": "^8.2.0",
     "@nestjs/testing": "^6.10.1",
+    "@types/chai": "^4.2.6",
     "@types/dotenv": "^8.2.0",
     "@types/express": "^4.17.1",
-    "@types/handlebars-helpers": "^0.5.2",
-    "@types/jest": "^24.0.23",
+    "@types/mocha": "^5.2.7",
     "@types/moment": "^2.13.0",
     "@types/node": "^12.7.5",
+    "chai": "^4.2.0",
     "commitizen": "^4.0.3",
     "cz-customizable": "^6.2.0",
     "envdot": "0.0.3",
     "husky": "^3.0.9",
-    "jest": "^24.9.0",
+    "mocha": "^6.2.2",
     "prettier": "^1.18.2",
-    "ts-jest": "^24.1.0",
     "ts-loader": "^6.1.1",
-    "ts-node": "^8.4.1",
+    "ts-node": "^8.5.4",
     "tsconfig-paths": "^3.9.0",
     "tslint": "^5.20.0",
     "typescript": "^3.6.3"

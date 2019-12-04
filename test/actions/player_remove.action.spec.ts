@@ -1,3 +1,6 @@
+import 'mocha';
+import {expect} from 'chai';
+
 import {createContextStub} from '../stubs/context.stub';
 import {createModuleStub} from '../stubs/actions.module.stub';
 import {clearDatabase} from '../helpers/db-helper';
@@ -13,7 +16,7 @@ describe('PlayerRemoveAction', () => {
     let appEmitter: AppEmitter;
     let storageService: StorageService;
 
-    beforeAll(async () => {
+    before(async () => {
         const testModule = await createModuleStub();
 
         appEmitter = testModule.get<AppEmitter>(AppEmitter);
@@ -29,7 +32,7 @@ describe('PlayerRemoveAction', () => {
             const chatCountBefore: number = await storageService.connection
                 .getRepository(Chat)
                 .count();
-            expect(chatCountBefore).toBe(0);
+            expect(chatCountBefore).to.equal(0);
 
             await new Promise(resolve => {
                 const ctx = createContextStub({lang: 'en', chatId: 1}, resolve);
@@ -39,7 +42,7 @@ describe('PlayerRemoveAction', () => {
             const chatCountAfter: number = await storageService.connection
                 .getRepository(Chat)
                 .count();
-            expect(chatCountAfter).toBe(1);
+            expect(chatCountAfter).to.equal(1);
         });
 
         it('should return no_event response if active event was not found', async () => {
@@ -49,7 +52,7 @@ describe('PlayerRemoveAction', () => {
             });
 
             const {params}: {params: IParams} = JSON.parse(jsonRes);
-            expect(params.status).toBe(statuses.STATUS_NO_EVENT);
+            expect(params.status).to.equal(statuses.STATUS_NO_EVENT);
         });
 
         describe('active event exists', () => {
@@ -70,7 +73,7 @@ describe('PlayerRemoveAction', () => {
                 });
 
                 const {params}: {params: IParams} = JSON.parse(jsonRes);
-                expect(params.status).toBe(statuses.STATUS_NO_PLAYER);
+                expect(params.status).to.equal(statuses.STATUS_NO_PLAYER);
             });
 
             describe('player exist', () => {
@@ -78,7 +81,7 @@ describe('PlayerRemoveAction', () => {
                     const players: Player[] = await storageService.connection
                         .getRepository(Player)
                         .find();
-                    expect(players[0].name).toBe('John Smith');
+                    expect(players[0].name).to.equal('John Smith');
                 }
 
                 async function assertNotExistedPlayer_() {
@@ -86,7 +89,7 @@ describe('PlayerRemoveAction', () => {
                         .getRepository(Player)
                         .count();
 
-                    expect(playersCount).toBe(0);
+                    expect(playersCount).to.equal(0);
                 }
 
                 beforeEach(async () => {
@@ -125,7 +128,7 @@ describe('PlayerRemoveAction', () => {
                     });
 
                     const {params}: {params: IParams} = JSON.parse(jsonRes);
-                    expect(params.status).toBe(statuses.STATUS_SUCCESS);
+                    expect(params.status).to.equal(statuses.STATUS_SUCCESS);
                 });
 
                 it('should inlude name of removed player into result', async () => {
@@ -135,7 +138,7 @@ describe('PlayerRemoveAction', () => {
                     });
 
                     const {data} = JSON.parse(jsonRes);
-                    expect(data.name).toBe('John Smith');
+                    expect(data.name).to.equal('John Smith');
                 });
 
                 it('should include list of players into result', async () => {
@@ -150,9 +153,9 @@ describe('PlayerRemoveAction', () => {
                     });
 
                     const {data} = JSON.parse(jsonRes);
-                    expect(data.total).toBe(1);
-                    expect(data.players[0].index).toBe(1);
-                    expect(data.players[0].name).toBe('Jack Wayne');
+                    expect(data.total).to.equal(1);
+                    expect(data.players[0].index).to.equal(1);
+                    expect(data.players[0].name).to.equal('Jack Wayne');
                 });
             });
         });

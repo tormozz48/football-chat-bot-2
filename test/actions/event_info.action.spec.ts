@@ -1,3 +1,6 @@
+import 'mocha';
+import {expect} from 'chai';
+
 import {createContextStub} from '../stubs/context.stub';
 import {createModuleStub} from '../stubs/actions.module.stub';
 import {clearDatabase} from '../helpers/db-helper';
@@ -12,7 +15,7 @@ describe('EventAddAction', () => {
     let appEmitter: AppEmitter;
     let storageService: StorageService;
 
-    beforeAll(async () => {
+    before(async () => {
         const testModule = await createModuleStub();
 
         appEmitter = testModule.get<AppEmitter>(AppEmitter);
@@ -28,7 +31,7 @@ describe('EventAddAction', () => {
             const chatCountBefore: number = await storageService.connection
                 .getRepository(Chat)
                 .count();
-            expect(chatCountBefore).toBe(0);
+            expect(chatCountBefore).to.equal(0);
 
             await new Promise(resolve => {
                 const ctx = createContextStub({}, resolve);
@@ -38,7 +41,7 @@ describe('EventAddAction', () => {
             const chatCountAfter: number = await storageService.connection
                 .getRepository(Chat)
                 .count();
-            expect(chatCountAfter).toBe(1);
+            expect(chatCountAfter).to.equal(1);
         });
 
         it('should return no_event response if active event was not found', async () => {
@@ -48,7 +51,7 @@ describe('EventAddAction', () => {
             });
 
             const {params}: {params: IParams} = JSON.parse(jsonRes);
-            expect(params.status).toBe(statuses.STATUS_NO_EVENT);
+            expect(params.status).to.equal(statuses.STATUS_NO_EVENT);
         });
 
         describe('active event exists', () => {
@@ -66,7 +69,7 @@ describe('EventAddAction', () => {
                 });
 
                 const {params}: {params: IParams} = JSON.parse(jsonRes);
-                expect(params.status).toBe(statuses.STATUS_SUCCESS);
+                expect(params.status).to.equal(statuses.STATUS_SUCCESS);
             });
 
             it('should include date of event into response', async () => {
@@ -76,7 +79,7 @@ describe('EventAddAction', () => {
                 });
 
                 const {data}: any = JSON.parse(jsonRes);
-                expect(data.date).toMatch(/^\d{2}-\d{2}-\d{4}\s\d{2}:\d{2}$/);
+                expect(data.date).to.match(/^\d{2}-\d{2}-\d{4}\s\d{2}:\d{2}$/);
             });
 
             it('should include list of event members', async () => {
@@ -86,8 +89,8 @@ describe('EventAddAction', () => {
                 });
 
                 const {data}: any = JSON.parse(jsonRes);
-                expect(data.total).toBe(0);
-                expect(data.players).toStrictEqual([]);
+                expect(data.total).to.equal(0);
+                expect(data.players).to.eql([]);
             });
         });
     });

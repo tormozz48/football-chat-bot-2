@@ -1,3 +1,6 @@
+import 'mocha';
+import {expect} from 'chai';
+
 import {createContextStub} from '../stubs/context.stub';
 import {createModuleStub} from '../stubs/actions.module.stub';
 import {clearDatabase} from '../helpers/db-helper';
@@ -13,7 +16,7 @@ describe('EventRemoveAction', () => {
     let appEmitter: AppEmitter;
     let storageService: StorageService;
 
-    beforeAll(async () => {
+    before(async () => {
         const testModule = await createModuleStub();
 
         appEmitter = testModule.get<AppEmitter>(AppEmitter);
@@ -29,7 +32,7 @@ describe('EventRemoveAction', () => {
             const chatCountBefore: number = await storageService.connection
                 .getRepository(Chat)
                 .count();
-            expect(chatCountBefore).toBe(0);
+            expect(chatCountBefore).to.equal(0);
 
             await new Promise(resolve => {
                 const ctx = createContextStub({}, resolve);
@@ -39,7 +42,7 @@ describe('EventRemoveAction', () => {
             const chatCountAfter: number = await storageService.connection
                 .getRepository(Chat)
                 .count();
-            expect(chatCountAfter).toBe(1);
+            expect(chatCountAfter).to.equal(1);
         });
 
         it('should return no_event response if active event was not found', async () => {
@@ -49,7 +52,7 @@ describe('EventRemoveAction', () => {
             });
 
             const {params}: {params: IParams} = JSON.parse(jsonRes);
-            expect(params.status).toBe(statuses.STATUS_NO_EVENT);
+            expect(params.status).to.equal(statuses.STATUS_NO_EVENT);
         });
 
         describe('active event exists', () => {
@@ -66,8 +69,8 @@ describe('EventRemoveAction', () => {
                 events = await storageService.connection
                     .getRepository(Event)
                     .find({});
-                expect(events).toHaveLength(1);
-                expect(events[0].active).toBe(true);
+                expect(events).to.be.lengthOf(1);
+                expect(events[0].active).to.equal(true);
 
                 await new Promise(resolve => {
                     const ctx = createContextStub({}, resolve);
@@ -77,8 +80,8 @@ describe('EventRemoveAction', () => {
                 events = await storageService.connection
                     .getRepository(Event)
                     .find({});
-                expect(events).toHaveLength(1);
-                expect(events[0].active).toBe(false);
+                expect(events).to.be.lengthOf(1);
+                expect(events[0].active).to.equal(false);
             });
 
             it('should return success result', async () => {
@@ -88,7 +91,7 @@ describe('EventRemoveAction', () => {
                 });
 
                 const {params}: {params: IParams} = JSON.parse(jsonRes);
-                expect(params.status).toBe(statuses.STATUS_SUCCESS);
+                expect(params.status).to.equal(statuses.STATUS_SUCCESS);
             });
         });
     });

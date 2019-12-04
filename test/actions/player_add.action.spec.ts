@@ -1,3 +1,6 @@
+import 'mocha';
+import {expect} from 'chai';
+
 import {createContextStub} from '../stubs/context.stub';
 import {createModuleStub} from '../stubs/actions.module.stub';
 import {clearDatabase} from '../helpers/db-helper';
@@ -13,7 +16,7 @@ describe('PlayerAddAction', () => {
     let appEmitter: AppEmitter;
     let storageService: StorageService;
 
-    beforeAll(async () => {
+    before(async () => {
         const testModule = await createModuleStub();
 
         appEmitter = testModule.get<AppEmitter>(AppEmitter);
@@ -29,7 +32,7 @@ describe('PlayerAddAction', () => {
             const chatCountBefore: number = await storageService.connection
                 .getRepository(Chat)
                 .count();
-            expect(chatCountBefore).toBe(0);
+            expect(chatCountBefore).to.equal(0);
 
             await new Promise(resolve => {
                 const ctx = createContextStub({}, resolve);
@@ -39,7 +42,7 @@ describe('PlayerAddAction', () => {
             const chatCountAfter: number = await storageService.connection
                 .getRepository(Chat)
                 .count();
-            expect(chatCountAfter).toBe(1);
+            expect(chatCountAfter).to.equal(1);
         });
 
         it('should return no_event response if active event was not found', async () => {
@@ -49,7 +52,7 @@ describe('PlayerAddAction', () => {
             });
 
             const {params}: {params: IParams} = JSON.parse(jsonRes);
-            expect(params.status).toBe(statuses.STATUS_NO_EVENT);
+            expect(params.status).to.equal(statuses.STATUS_NO_EVENT);
         });
 
         describe('active event exists', () => {
@@ -72,22 +75,54 @@ describe('PlayerAddAction', () => {
                 const players: Player[] = await storageService.connection
                     .getRepository(Player)
                     .find();
-                expect(players[0].name).toBe('John Smith');
+                expect(players[0].name).to.equal('John Smith');
             });
 
-            it('should add message owner as player if name was not set', async () => {
-                await new Promise(resolve => {
-                    const ctx = createContextStub(
-                        {firstName: 'John', lastName: 'Smith'},
-                        resolve,
-                    );
-                    appEmitter.emit(appEmitter.PERSON_ADD, ctx);
+            describe('should add message owner as player ', () => {
+                it('if name was not set', async () => {
+                    await new Promise(resolve => {
+                        const ctx = createContextStub(
+                            {firstName: 'John', lastName: 'Smith'},
+                            resolve,
+                        );
+                        appEmitter.emit(appEmitter.PERSON_ADD, ctx);
+                    });
+
+                    const players: Player[] = await storageService.connection
+                        .getRepository(Player)
+                        .find();
+                    expect(players[0].name).to.equal('John Smith');
                 });
 
-                const players: Player[] = await storageService.connection
-                    .getRepository(Player)
-                    .find();
-                expect(players[0].name).toBe('John Smith');
+                it('and use his first name only if last name was not set', async () => {
+                    await new Promise(resolve => {
+                        const ctx = createContextStub(
+                            {firstName: 'John'},
+                            resolve,
+                        );
+                        appEmitter.emit(appEmitter.PERSON_ADD, ctx);
+                    });
+
+                    const players: Player[] = await storageService.connection
+                        .getRepository(Player)
+                        .find();
+                    expect(players[0].name).to.equal('John');
+                });
+
+                it('and use his last name only if first name was not set', async () => {
+                    await new Promise(resolve => {
+                        const ctx = createContextStub(
+                            {lastName: 'Smith'},
+                            resolve,
+                        );
+                        appEmitter.emit(appEmitter.PERSON_ADD, ctx);
+                    });
+
+                    const players: Player[] = await storageService.connection
+                        .getRepository(Player)
+                        .find();
+                    expect(players[0].name).to.equal('Smith');
+                });
             });
 
             it('should return success result', async () => {
@@ -100,7 +135,7 @@ describe('PlayerAddAction', () => {
                 });
 
                 const {params}: {params: IParams} = JSON.parse(jsonRes);
-                expect(params.status).toBe(statuses.STATUS_SUCCESS);
+                expect(params.status).to.equal(statuses.STATUS_SUCCESS);
             });
 
             it('should include name of added player into result', async () => {
@@ -113,7 +148,7 @@ describe('PlayerAddAction', () => {
                 });
 
                 const {data} = JSON.parse(jsonRes);
-                expect(data.name).toBe('John Smith');
+                expect(data.name).to.equal('John Smith');
             });
 
             it('should include list of players into result', async () => {
@@ -126,9 +161,9 @@ describe('PlayerAddAction', () => {
                 });
 
                 const {data} = JSON.parse(jsonRes);
-                expect(data.total).toBe(1);
-                expect(data.players[0].index).toBe(1);
-                expect(data.players[0].name).toBe('John Smith');
+                expect(data.total).to.equal(1);
+                expect(data.players[0].index).to.equal(1);
+                expect(data.players[0].name).to.equal('John Smith');
             });
 
             it('should return already added response if player with given name has already been added', async () => {
@@ -149,7 +184,7 @@ describe('PlayerAddAction', () => {
                 });
 
                 const {params}: {params: IParams} = JSON.parse(jsonRes);
-                expect(params.status).toBe(statuses.STATUS_ALREADY_ADDED);
+                expect(params.status).to.equal(statuses.STATUS_ALREADY_ADDED);
             });
         });
     });

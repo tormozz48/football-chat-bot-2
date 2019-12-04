@@ -1,4 +1,4 @@
-import {Test} from '@nestjs/testing';
+import {Test, TestingModule} from '@nestjs/testing';
 
 import {CommonModule} from '../../src/common/common.module';
 import {StorageModule} from '../../src/storage/storage.module';
@@ -11,8 +11,10 @@ import {EventInfoAction} from '../../src/actions/event_info.action';
 import {PlayerAddAction} from '../../src/actions/player_add.action';
 import {PlayerRemoveAction} from '../../src/actions/player_remove.action';
 
-export const createModuleStub = () => {
-    return Test.createTestingModule({
+let moduleStub: TestingModule;
+
+export const createModuleStub = async (): Promise<TestingModule> => {
+    moduleStub = moduleStub || await Test.createTestingModule({
         imports: [CommonModule, StorageModule],
         providers: [
             EventAddAction,
@@ -25,4 +27,6 @@ export const createModuleStub = () => {
         .overrideProvider(TemplateService)
         .useClass(TemplateServiceStub)
         .compile();
+
+    return moduleStub;
 };

@@ -1,3 +1,6 @@
+import 'mocha';
+import {expect} from 'chai';
+
 import {createContextStub} from '../stubs/context.stub';
 import {createModuleStub} from '../stubs/actions.module.stub';
 import {clearDatabase} from '../helpers/db-helper';
@@ -11,7 +14,7 @@ describe('EventAddAction', () => {
     let appEmitter: AppEmitter;
     let storageService: StorageService;
 
-    beforeAll(async () => {
+    before(async () => {
         const testModule = await createModuleStub();
 
         appEmitter = testModule.get<AppEmitter>(AppEmitter);
@@ -27,7 +30,7 @@ describe('EventAddAction', () => {
             const chatCountBefore: number = await storageService.connection
                 .getRepository(Chat)
                 .count();
-            expect(chatCountBefore).toBe(0);
+            expect(chatCountBefore).to.equal(0);
 
             await new Promise(resolve => {
                 const ctx = createContextStub({}, resolve);
@@ -37,14 +40,14 @@ describe('EventAddAction', () => {
             const chatCountAfter: number = await storageService.connection
                 .getRepository(Chat)
                 .count();
-            expect(chatCountAfter).toBe(1);
+            expect(chatCountAfter).to.equal(1);
         });
 
         it('should create new event and mark it as active', async () => {
             const eventsBefore: number = await storageService.connection
                 .getRepository(Event)
                 .count();
-            expect(eventsBefore).toBe(0);
+            expect(eventsBefore).to.equal(0);
 
             await new Promise(resolve => {
                 const ctx = createContextStub({}, resolve);
@@ -55,15 +58,15 @@ describe('EventAddAction', () => {
                 .getRepository(Event)
                 .find({});
 
-            expect(events).toHaveLength(1);
-            expect(events[0].active).toBe(true);
+            expect(events).to.be.lengthOf(1);
+            expect(events[0].active).to.equal(true);
         });
 
         it('should make all existed events inactive', async () => {
             const eventsBefore: number = await storageService.connection
                 .getRepository(Event)
                 .count();
-            expect(eventsBefore).toBe(0);
+            expect(eventsBefore).to.equal(0);
 
             let events: Event[];
 
@@ -75,7 +78,7 @@ describe('EventAddAction', () => {
             events = await storageService.connection
                 .getRepository(Event)
                 .find({});
-            expect(events[0].active).toBe(true);
+            expect(events[0].active).to.equal(true);
 
             await new Promise(resolve => {
                 const ctx = createContextStub({}, resolve);
@@ -85,8 +88,8 @@ describe('EventAddAction', () => {
             events = await storageService.connection
                 .getRepository(Event)
                 .find({});
-            expect(events[0].active).toBe(false);
-            expect(events[1].active).toBe(true);
+            expect(events[0].active).to.equal(false);
+            expect(events[1].active).to.equal(true);
         });
 
         it('should return information about created event', async () => {
@@ -96,7 +99,7 @@ describe('EventAddAction', () => {
             });
 
             const {data} = JSON.parse(jsonRes);
-            expect(data.date).toMatch(/^\d{2}-\d{2}-\d{4}\s\d{2}:\d{2}$/);
+            expect(data.date).to.match(/^\d{2}-\d{2}-\d{4}\s\d{2}:\d{2}$/);
         });
     });
 });
