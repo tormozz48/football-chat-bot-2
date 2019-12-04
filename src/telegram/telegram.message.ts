@@ -25,10 +25,17 @@ export class TelegramMessage extends BaseMessage implements IMessage {
 
         return targetName.length > 0
             ? targetName
-            : `${this.firstName} ${this.lastName}`.trim();
+            : this.composeOwnName();
     }
 
     public answer(args: any): string {
         return this.ctx.replyWithHTML(args);
+    }
+
+    private composeOwnName() {
+        const firstName: string = this.firstName || '';
+        const lastName: string = this.lastName || '';
+
+        return `${firstName} ${lastName}`.trim();
     }
 }
