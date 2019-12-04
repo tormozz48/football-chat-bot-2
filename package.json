@@ -14,7 +14,7 @@
     "lint": "tslint -p tsconfig.json -c tslint.json",
     "test": "mocha -r ts-node/register test/**/*.spec.ts",
     "test:watch": "npm test -- --watch --extension *.ts",
-    "test:cov": "jest --coverage",
+    "test:cov": "nyc npm run test",
     "env:generate": "node gen-env.js"
   },
   "husky": {
@@ -67,6 +67,7 @@
     "handlebars-helpers": "^0.10.0",
     "lodash": "^4.17.15",
     "moment": "^2.24.0",
+    "nyc": "^14.1.1",
     "read-dir-deep": "^7.0.1",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.0",

@@ -3,6 +3,7 @@
 *.env
 !.env.dist
 *.sqlite
+.nyc_output
 node_modules
 dist
 coverage
