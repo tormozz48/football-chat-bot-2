@@ -19,8 +19,8 @@ const connections = {
         ...commonOptions,
     },
     production: {
-        type: 'sqlite',
-        database: 'production.sqlite',
+        type: 'postgres',
+        url: process.env.DATABASE_URL,
         ...commonOptions,
     },
 };

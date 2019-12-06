@@ -53,7 +53,7 @@ export class StorageService {
             .createQueryBuilder()
             .update(Event)
             .set({active: false})
-            .where('chatId = :chatId', {chatId})
+            .where('event.chatid = :chatId', {chatId})
             .execute();
     }
 
