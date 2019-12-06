@@ -20,3 +20,9 @@ export const createContextStub = (params: any, callback) => {
         replyWithHTML: (...args) => callback(...args),
     });
 };
+
+export const createEventAddContextStub = (params: any, callback) => {
+    params.text = params.text || '/event_add 2019-06-12 17:30';
+
+    return createContextStub(params, callback);
+};

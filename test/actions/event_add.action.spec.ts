@@ -1,7 +1,7 @@
 import 'mocha';
 import {expect} from 'chai';
 
-import {createContextStub} from '../stubs/context.stub';
+import {createContextStub, createEventAddContextStub} from '../stubs/context.stub';
 import {createModuleStub} from '../stubs/actions.module.stub';
 import {clearDatabase} from '../helpers/db-helper';
 
@@ -33,7 +33,7 @@ describe('EventAddAction', () => {
             expect(chatCountBefore).to.equal(0);
 
             await new Promise(resolve => {
-                const ctx = createContextStub({}, resolve);
+                const ctx = createEventAddContextStub({}, resolve);
                 appEmitter.emit(appEmitter.EVENT_ADD, ctx);
             });
 
@@ -50,7 +50,7 @@ describe('EventAddAction', () => {
             expect(eventsBefore).to.equal(0);
 
             await new Promise(resolve => {
-                const ctx = createContextStub({}, resolve);
+                const ctx = createEventAddContextStub({}, resolve);
                 appEmitter.emit(appEmitter.EVENT_ADD, ctx);
             });
 
@@ -71,7 +71,7 @@ describe('EventAddAction', () => {
             let events: Event[];
 
             await new Promise(resolve => {
-                const ctx = createContextStub({}, resolve);
+                const ctx = createEventAddContextStub({}, resolve);
                 appEmitter.emit(appEmitter.EVENT_ADD, ctx);
             });
 
@@ -81,7 +81,7 @@ describe('EventAddAction', () => {
             expect(events[0].active).to.equal(true);
 
             await new Promise(resolve => {
-                const ctx = createContextStub({}, resolve);
+                const ctx = createEventAddContextStub({}, resolve);
                 appEmitter.emit(appEmitter.EVENT_ADD, ctx);
             });
 
@@ -94,7 +94,7 @@ describe('EventAddAction', () => {
 
         it('should return information about created event', async () => {
             const jsonRes: string = await new Promise(resolve => {
-                const ctx = createContextStub({}, resolve);
+                const ctx = createEventAddContextStub({}, resolve);
                 appEmitter.emit(appEmitter.EVENT_ADD, ctx);
             });
 

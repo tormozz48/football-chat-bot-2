@@ -1,7 +1,7 @@
 import 'mocha';
 import {expect} from 'chai';
 
-import {createContextStub} from '../stubs/context.stub';
+import {createContextStub, createEventAddContextStub} from '../stubs/context.stub';
 import {createModuleStub} from '../stubs/actions.module.stub';
 import {clearDatabase} from '../helpers/db-helper';
 
@@ -58,7 +58,7 @@ describe('PlayerAddAction', () => {
         describe('active event exists', () => {
             beforeEach(async () => {
                 await new Promise(resolve => {
-                    const ctx = createContextStub({}, resolve);
+                    const ctx = createEventAddContextStub({}, resolve);
                     appEmitter.emit(appEmitter.EVENT_ADD, ctx);
                 });
             });

@@ -1,7 +1,7 @@
 import 'mocha';
 import {expect} from 'chai';
 
-import {createContextStub} from '../stubs/context.stub';
+import {createContextStub, createEventAddContextStub} from '../stubs/context.stub';
 import {createModuleStub} from '../stubs/actions.module.stub';
 import {clearDatabase} from '../helpers/db-helper';
 
@@ -58,7 +58,7 @@ describe('PlayerRemoveAction', () => {
         describe('active event exists', () => {
             beforeEach(async () => {
                 await new Promise(resolve => {
-                    const ctx = createContextStub(
+                    const ctx = createEventAddContextStub(
                         {lang: 'en', chatId: 1},
                         resolve,
                     );
