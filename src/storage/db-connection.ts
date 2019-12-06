@@ -27,5 +27,7 @@ const connections = {
 
 export const getConnection = (): DynamicModule => {
     const env: string = process.env.NODE_ENV || 'development';
-    return TypeOrmModule.forRoot(connections[env]);
+    const connectionOptions = connections[env];
+
+    return TypeOrmModule.forRoot(connectionOptions);
 };
