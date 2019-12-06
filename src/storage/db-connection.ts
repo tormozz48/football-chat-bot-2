@@ -1,3 +1,4 @@
+import uuidv4 from 'uuid/v4';
 import {TypeOrmModule} from '@nestjs/typeorm';
 import {DynamicModule} from '@nestjs/common';
 
@@ -26,5 +27,11 @@ const connections = {
 
 export const getConnection = (): DynamicModule => {
     const env: string = process.env.NODE_ENV || 'development';
-    return TypeOrmModule.forRoot(connections[env]);
+    const connectionOptions = connections[env];
+
+    if (env === 'test') {
+        connectionOptions.name = `connection: ${uuidv4()}`;
+    }
+
+    return TypeOrmModule.forRoot(connectionOptions);
 };
