@@ -4,8 +4,8 @@ import * as statuses from './statuses';
 import {PlayerAction} from './player.action';
 import {Chat} from '../storage/models/chat';
 import {Event} from '../storage/models/event';
-import {Player} from 'src/storage/models/player';
-import {IMessage} from 'src/message/i-message';
+import {Player} from '../storage/models/player';
+import {IMessage} from '../message/i-message';
 
 @Injectable()
 export class PlayerAddAction extends PlayerAction {

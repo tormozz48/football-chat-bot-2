@@ -1,7 +1,7 @@
 import {Injectable} from '@nestjs/common';
 import {BaseAction} from './base.action';
 import {Event} from '../storage/models/event';
-import {Player} from 'src/storage/models/player';
+import {Player} from '../storage/models/player';
 
 @Injectable()
 export class PlayerAction extends BaseAction {

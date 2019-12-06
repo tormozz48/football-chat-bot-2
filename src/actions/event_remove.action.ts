@@ -4,8 +4,8 @@ import * as statuses from './statuses';
 import {formatEventDate} from '../common/utils';
 import {BaseAction} from './base.action';
 import {Chat} from '../storage/models/chat';
-import {Event} from 'src/storage/models/event';
-import {IMessage} from 'src/message/i-message';
+import {Event} from '../storage/models/event';
+import {IMessage} from '../message/i-message';
 
 @Injectable()
 export class EventRemoveAction extends BaseAction {
