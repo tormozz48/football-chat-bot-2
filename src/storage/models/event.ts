@@ -21,7 +21,6 @@ export class Event {
     active: boolean;
 
     @ManyToOne(type => Chat, chat => chat.events)
-    @JoinColumn({name: 'chatid'})
     chat: Chat;
 
     @OneToMany(type => Player, player => player.event)

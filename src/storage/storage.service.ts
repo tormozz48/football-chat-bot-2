@@ -44,16 +44,16 @@ export class StorageService {
 
     /**
      * Updates all chat events. Makes them inactive
-     * @param {number} chatId
+     * @param {Chat} chat
      * @returns {Promise<UpdateResult>}
      * @memberOf StorageService
      */
-    public markChatEventsInactive(chatId: number): Promise<UpdateResult> {
+    public markChatEventsInactive(chat: Chat): Promise<UpdateResult> {
         return this.dbConnection
             .createQueryBuilder()
             .update(Event)
             .set({active: false})
-            .where('event.chatid = :chatId', {chatId})
+            .where({chat})
             .execute();
     }
 
@@ -80,12 +80,7 @@ export class StorageService {
      * @memberOf StorageService
      */
     public findChatActiveEvent(chat: Chat): Promise<Event | null> {
-        return this.eventRepository.findOne({
-            where: {
-                chatId: chat.chatId,
-                active: true,
-            },
-        });
+        return this.eventRepository.findOne({where: {chat, active: true}});
     }
 
     /**
@@ -95,11 +90,7 @@ export class StorageService {
      * @memberOf StorageService
      */
     public getPlayers(event: Event): Promise<Player[]> {
-        return this.playerRepository.find({
-            where: {
-                eventId: event.id,
-            },
-        });
+        return this.playerRepository.find({where: {event}});
     }
 
     /**
@@ -110,12 +101,7 @@ export class StorageService {
      * @memberOf StorageService
      */
     public findPlayer(event: Event, name: string): Promise<Player | null> {
-        return this.playerRepository.findOne({
-            where: {
-                eventId: event.id,
-                name,
-            },
-        });
+        return this.playerRepository.findOne({where: {event, name}});
     }
 
     /**

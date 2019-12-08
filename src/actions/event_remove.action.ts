@@ -15,7 +15,7 @@ export class EventRemoveAction extends BaseAction {
 
     protected async doAction(chat: Chat, message: IMessage): Promise<IMessage> {
         const activeEvent: Event = await this.storageService.findChatActiveEvent(chat);
-        await this.storageService.markChatEventsInactive(chat.id);
+        await this.storageService.markChatEventsInactive(chat);
 
         if (activeEvent) {
             return message

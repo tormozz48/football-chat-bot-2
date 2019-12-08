@@ -14,7 +14,7 @@ export class EventAddAction extends BaseAction {
     }
 
     protected async doAction(chat: Chat, message: IMessage): Promise<IMessage> {
-        await this.storageService.markChatEventsInactive(chat.id);
+        await this.storageService.markChatEventsInactive(chat);
 
         const eventDate: Date = this.getEventDate(message);
 

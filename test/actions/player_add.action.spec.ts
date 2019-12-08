@@ -9,8 +9,8 @@ import {AppEmitter} from '../../src/common/event-bus.service';
 import {StorageService} from '../../src/storage/storage.service';
 import * as statuses from '../../src/actions/statuses';
 import {Chat} from '../../src/storage/models/chat';
-import {IParams} from '../../src/common/template.service';
 import {Player} from '../../src/storage/models/player';
+import {IParams} from '../../src/common/template.service';
 
 describe('PlayerAddAction', () => {
     let appEmitter: AppEmitter;
