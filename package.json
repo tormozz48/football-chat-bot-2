@@ -67,6 +67,7 @@
     "handlebars-helpers": "^0.10.0",
     "lodash": "^4.17.15",
     "moment": "^2.24.0",
+    "node-vk-bot-api": "^3.1.1",
     "nyc": "^14.1.1",
     "pg": "^7.14.0",
     "read-dir-deep": "^7.0.1",
