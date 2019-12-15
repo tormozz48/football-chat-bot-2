@@ -28,7 +28,7 @@ export class TelegramMessage extends BaseMessage implements IMessage {
             : this.composeOwnName();
     }
 
-    public answer(args: any): string {
+    public answer(args: any): string|void {
         return this.ctx.replyWithHTML(args);
     }
 

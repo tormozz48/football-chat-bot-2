@@ -13,7 +13,7 @@ export class VKMessage extends BaseMessage implements IMessage {
         this.ctx = ctx;
 
         const {message} = this.ctx;
-        this.chatId = 1; // TODO: correctly detect chat id
+        this.chatId = this.getChatId(this.ctx);
         this.text = message.text;
         this.lang = 'ru';
         this.firstName = message.from.first_name;
@@ -28,9 +28,9 @@ export class VKMessage extends BaseMessage implements IMessage {
             : this.composeOwnName();
     }
 
-    public answer(args: any): string {
+    public answer(args: any) {
         const answer: string = `${args}`.replace(/<\/?(strong|i)>/gm, '');
-        return this.ctx.reply(answer);
+        this.ctx.reply(answer);
     }
 
     private composeOwnName() {
@@ -38,5 +38,11 @@ export class VKMessage extends BaseMessage implements IMessage {
         const lastName: string = this.lastName || '';
 
         return `${firstName} ${lastName}`.trim();
+    }
+
+    private getChatId({message, bot}): number {
+        const peerId: number = message.peer_id;
+        const groupId: number = bot.settings.group_id;
+        return peerId + groupId;
     }
 }
