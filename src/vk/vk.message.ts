@@ -1,7 +1,7 @@
 import {BaseMessage} from '../message/base.message';
 import {IMessage} from '../message/i-message';
 
-export class TelegramMessage extends BaseMessage implements IMessage {
+export class VKMessage extends BaseMessage implements IMessage {
     private firstName: string;
     private lastName: string;
 
@@ -12,10 +12,10 @@ export class TelegramMessage extends BaseMessage implements IMessage {
 
         this.ctx = ctx;
 
-        const {message} = this.ctx.update;
-        this.chatId = message.chat.id;
+        const {message} = this.ctx;
+        this.chatId = this.getChatId(this.ctx);
         this.text = message.text;
-        this.lang = message.from.language_code;
+        this.lang = 'ru';
         this.firstName = message.from.first_name;
         this.lastName = message.from.last_name;
     }
@@ -28,8 +28,9 @@ export class TelegramMessage extends BaseMessage implements IMessage {
             : this.composeOwnName();
     }
 
-    public answer(args: any): string|void {
-        return this.ctx.replyWithHTML(args);
+    public answer(args: any) {
+        const answer: string = `${args}`.replace(/<\/?(strong|i)>/gm, '');
+        this.ctx.reply(answer);
     }
 
     private composeOwnName() {
@@ -37,5 +38,11 @@ export class TelegramMessage extends BaseMessage implements IMessage {
         const lastName: string = this.lastName || '';
 
         return `${firstName} ${lastName}`.trim();
+    }
+
+    private getChatId({message, bot}): number {
+        const peerId: number = message.peer_id;
+        const groupId: number = bot.settings.group_id;
+        return peerId + groupId;
     }
 }

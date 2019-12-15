@@ -64,7 +64,7 @@ export class BaseMessage implements IMessage {
      * @returns {string}
      * @memberOf BaseMessage
      */
-    public answer(args: any): string {
+    public answer(args: any): string|void {
         throw new Error('not implemented');
     }
 }
