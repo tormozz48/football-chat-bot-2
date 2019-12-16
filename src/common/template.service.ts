@@ -49,8 +49,6 @@ export class TemplateService {
     }
 
     private load() {
-        this.logger.log('load templates');
-
         const templatesDir: string = path.join(
             process.cwd(),
             this.TEMPLATE_PATH,
@@ -58,7 +56,6 @@ export class TemplateService {
         const templateFileNames: string[] = readDirDeepSync(templatesDir);
 
         this.templatesMap = templateFileNames.reduce((acc, fileName) => {
-            this.logger.debug(`load template: ${fileName}`);
             const template = fs.readFileSync(fileName, {encoding: 'utf-8'});
 
             const [, lang, action, status] = fileName

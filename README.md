@@ -15,12 +15,9 @@ git clone https://github.com/tormozz48/football-chat-bot-2.git
 npm install
 ```
 3. Set up all environment variables.
-Also you can create {NODE_ENV}.env file, for example:
-* `devevopment.env` for NODE_ENV=development
-* `production.env` for NODE_ENV=production
-and fill them with environment variables described in "Configuration" section.
+Also you can create `.env` file and fill them with environment variables described in "Configuration" section.
 
-4. Launch application server:
+1. Launch application server:
 ```bash
 npm start
 ```
@@ -35,6 +32,8 @@ Configuration is performed by modifying these environment variables:
 * `TELEGRAM_PROXY_PORT` - proxy server port
 * `TELEGRAM_PROXY_LOGIN` - proxy auth login
 * `TELEGRAM_PROXY_PASSWORD` - proxy auth password
+* `VK_TOKEN` - unique vk bot token string
+* `DATABASE_URL` - connection url fot database. Used for production environment.
 
 ## Development
 

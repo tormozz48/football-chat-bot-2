@@ -13,13 +13,6 @@ jobs:
     env:
       LOGIN: ${{ secrets.DOCKER_LOGIN }}
       NAME: ${{ secrets.DOCKER_NAME }}
-      TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-      TELEGRAM_USE_PROXY: ${{ secrets.TELEGRAM_USE_PROXY }}
-      TELEGRAM_PROXY_HOST: ${{ secrets.TELEGRAM_PROXY_HOST }}
-      TELEGRAM_PROXY_PORT: ${{ secrets.TELEGRAM_PROXY_PORT }}
-      TELEGRAM_PROXY_LOGIN: ${{ secrets.TELEGRAM_PROXY_LOGIN }}
-      TELEGRAM_PROXY_PASSWORD: ${{ secrets.TELEGRAM_PROXY_PASSWORD }}
-      DATABASE_URL: ${{secrets.DATABASE_URL}}
 
     steps:
     - uses: actions/checkout@v1
@@ -28,7 +21,7 @@ jobs:
     - name: Login to docker.io
       run:  echo ${{ secrets.DOCKER_PWD }} | docker login -u ${{ secrets.DOCKER_LOGIN }} --password-stdin
     - name: npm install and build
-      run: npm ci && npm run build --if-present && npm run env:generate
+      run: npm ci && npm run build
     - name: Build the Docker image
       run: docker build -t $LOGIN/$NAME:${GITHUB_REF:10} -f Dockerfile .
     - name: Push image to docker.io
