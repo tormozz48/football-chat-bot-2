@@ -39,11 +39,16 @@
     "chat",
     "bot",
     "telegram",
-    "telegram",
+    "vk",
     "bot",
+    "vk-bot",
+    "vk-api",
     "nestjs",
     "nodejs",
-    "typescript"
+    "typescript",
+    "typeorm",
+    "sqlite3",
+    "postgresql"
   ],
   "author": "andrey.kuznetsov48@yandex.ru",
   "license": "MIT",
