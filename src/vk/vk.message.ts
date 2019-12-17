@@ -41,7 +41,7 @@ export class VKMessage extends BaseMessage implements IMessage {
     }
 
     private getChatId({message, bot}): number {
-        const peerId: number = message.peer_id;
+        const peerId: number = +(`${message.peer_id}`.replace(/[0-9]0+/, ''));
         const groupId: number = bot.settings.group_id;
         return peerId + groupId;
     }
