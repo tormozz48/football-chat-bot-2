@@ -5,6 +5,9 @@ export class BaseMessage implements IMessage {
     public lang: string;
     public text: string;
 
+    protected firstName: string;
+    protected lastName: string;
+
     protected replyStatus: string;
     protected replyData: any;
 
@@ -15,7 +18,11 @@ export class BaseMessage implements IMessage {
      * @memberOf BaseMessage
      */
     get name(): string {
-        throw new Error('not implemented');
+        const targetName: string = this.text.replace(/^\/(add|remove)\S*/, '').trim();
+
+        return targetName.length > 0
+            ? targetName
+            : this.composeOwnName();
     }
 
     /**
@@ -66,5 +73,12 @@ export class BaseMessage implements IMessage {
      */
     public answer(args: any): string|void {
         throw new Error('not implemented');
+    }
+
+    private composeOwnName() {
+        const firstName: string = this.firstName || '';
+        const lastName: string = this.lastName || '';
+
+        return `${firstName} ${lastName}`.trim();
     }
 }
