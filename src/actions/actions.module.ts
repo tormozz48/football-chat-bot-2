@@ -2,6 +2,7 @@ import {Module} from '@nestjs/common';
 import {CommonModule} from '../common/common.module';
 import {StorageModule} from '../storage/storage.module';
 
+import {PlayerHelper} from './player.helper';
 import {EventAddAction} from './event_add.action';
 import {EventInfoAction} from './event_info.action';
 import {EventRemoveAction} from './event_remove.action';
@@ -16,6 +17,7 @@ import {PlayerRemoveAction} from './player_remove.action';
         EventRemoveAction,
         PlayerAddAction,
         PlayerRemoveAction,
+        PlayerHelper,
     ],
     exports: [],
 })

@@ -1,8 +1,13 @@
-import {Injectable} from '@nestjs/common';
+import {Injectable, Logger} from '@nestjs/common';
 
 import * as statuses from './statuses';
 import {formatEventDate} from '../common/utils';
+import {ConfigService} from '../common/config.service';
+import {AppEmitter} from '../common/event-bus.service';
+import {TemplateService} from '../common/template.service';
+import {StorageService} from '../storage/storage.service';
 import {BaseAction} from './base.action';
+import {PlayerHelper} from './player.helper';
 import {Chat} from '../storage/models/chat';
 import {Event} from '../storage/models/event';
 import {Player} from '../storage/models/player';
@@ -10,6 +15,26 @@ import {IMessage} from '../message/i-message';
 
 @Injectable()
 export class EventInfoAction extends BaseAction {
+    private playerHelper: PlayerHelper;
+
+    constructor(
+        config: ConfigService,
+        appEmitter: AppEmitter,
+        logger: Logger,
+        templateService: TemplateService,
+        playerHelper: PlayerHelper,
+        storageService: StorageService,
+    ) {
+        super(config,
+            appEmitter,
+            logger,
+            templateService,
+            storageService,
+        );
+
+        this.playerHelper = playerHelper;
+    }
+
     protected setEvent(): void {
         this.event = this.appEmitter.EVENT_INFO;
     }
@@ -27,11 +52,7 @@ export class EventInfoAction extends BaseAction {
             .setStatus(statuses.STATUS_SUCCESS)
             .withData({
                 date: formatEventDate(activeEvent.date),
-                total: players.length,
-                players: players.map((player, index) => ({
-                    index: index + 1,
-                    name: player.name,
-                })),
+                ...(await this.playerHelper.getPlayersList(activeEvent)),
             });
     }
 }

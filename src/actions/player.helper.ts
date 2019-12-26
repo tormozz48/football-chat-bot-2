@@ -1,11 +1,19 @@
 import {Injectable} from '@nestjs/common';
-import {BaseAction} from './base.action';
+import {StorageService} from '../storage/storage.service';
 import {Event} from '../storage/models/event';
 import {Player} from '../storage/models/player';
 
 @Injectable()
-export class PlayerAction extends BaseAction {
-    protected async getPlayersList(event: Event) {
+export class PlayerHelper {
+    protected storageService: StorageService;
+
+    constructor(
+        storageService: StorageService,
+    ) {
+        this.storageService = storageService;
+    }
+
+    public async getPlayersList(event: Event) {
         const players: Player[] = await this.storageService.getPlayers(event);
 
         return {
