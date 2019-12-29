@@ -1,7 +1,10 @@
 import 'mocha';
 import {expect} from 'chai';
 
-import {createContextStub, createEventAddContextStub} from '../stubs/context.stub';
+import {
+    createContextStub,
+    createEventAddContextStub,
+} from '../stubs/context.stub';
 import {createModuleStub} from '../stubs/actions.module.stub';
 import {clearDatabase} from '../helpers/db-helper';
 
@@ -27,10 +30,10 @@ describe('complex cases', () => {
 
     function addPlayer_(name, chatId = 1) {
         return new Promise(resolve => {
-            appEmitter.emit(appEmitter.PLAYER_ADD, createContextStub(
-                {text: name, chatId},
-                resolve,
-            ));
+            appEmitter.emit(
+                appEmitter.PLAYER_ADD,
+                createContextStub({text: name, chatId}, resolve),
+            );
         });
     }
 
@@ -39,7 +42,10 @@ describe('complex cases', () => {
 
     beforeEach(async () => {
         await new Promise(resolve => {
-            appEmitter.emit(appEmitter.EVENT_ADD, createEventAddContextStub({}, resolve));
+            appEmitter.emit(
+                appEmitter.EVENT_ADD,
+                createEventAddContextStub({}, resolve),
+            );
         });
 
         await addPlayer_('player-1-1');
@@ -61,7 +67,10 @@ describe('complex cases', () => {
 
     it('should create empty players set for each created event', async () => {
         await new Promise(resolve => {
-            appEmitter.emit(appEmitter.EVENT_ADD, createEventAddContextStub({}, resolve));
+            appEmitter.emit(
+                appEmitter.EVENT_ADD,
+                createEventAddContextStub({}, resolve),
+            );
         });
 
         await addPlayer_('player-2-1');
@@ -86,7 +95,10 @@ describe('complex cases', () => {
 
     it('should add players with same names to different events', async () => {
         await new Promise(resolve => {
-            appEmitter.emit(appEmitter.EVENT_ADD, createEventAddContextStub({}, resolve));
+            appEmitter.emit(
+                appEmitter.EVENT_ADD,
+                createEventAddContextStub({}, resolve),
+            );
         });
 
         await addPlayer_('player-1-1');

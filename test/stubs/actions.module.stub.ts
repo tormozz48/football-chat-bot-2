@@ -15,20 +15,22 @@ import {PlayerHelper} from '../../src/actions/player.helper';
 let moduleStub: TestingModule;
 
 export const createModuleStub = async (): Promise<TestingModule> => {
-    moduleStub = moduleStub || await Test.createTestingModule({
-        imports: [CommonModule, StorageModule],
-        providers: [
-            EventAddAction,
-            EventRemoveAction,
-            EventInfoAction,
-            PlayerAddAction,
-            PlayerRemoveAction,
-            PlayerHelper,
-        ],
-    })
-        .overrideProvider(TemplateService)
-        .useClass(TemplateServiceStub)
-        .compile();
+    moduleStub =
+        moduleStub ||
+        (await Test.createTestingModule({
+            imports: [CommonModule, StorageModule],
+            providers: [
+                EventAddAction,
+                EventRemoveAction,
+                EventInfoAction,
+                PlayerAddAction,
+                PlayerRemoveAction,
+                PlayerHelper,
+            ],
+        })
+            .overrideProvider(TemplateService)
+            .useClass(TemplateServiceStub)
+            .compile());
 
     return moduleStub;
 };

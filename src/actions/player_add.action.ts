@@ -24,12 +24,7 @@ export class PlayerAddAction extends BaseAction {
         playerHelper: PlayerHelper,
         storageService: StorageService,
     ) {
-        super(config,
-            appEmitter,
-            logger,
-            templateService,
-            storageService,
-        );
+        super(config, appEmitter, logger, templateService, storageService);
 
         this.playerHelper = playerHelper;
     }
@@ -39,14 +34,19 @@ export class PlayerAddAction extends BaseAction {
     }
 
     protected async doAction(chat: Chat, message: IMessage): Promise<IMessage> {
-        const activeEvent: Event = await this.storageService.findChatActiveEvent(chat);
+        const activeEvent: Event = await this.storageService.findChatActiveEvent(
+            chat,
+        );
 
         if (!activeEvent) {
             return message.setStatus(statuses.STATUS_NO_EVENT);
         }
 
-        const name: string = message.name;
-        const existedPlayer: Player = await this.storageService.findPlayer(activeEvent, name);
+        const name: string = this.playerHelper.getPlayerName(message);
+        const existedPlayer: Player = await this.storageService.findPlayer(
+            activeEvent,
+            name,
+        );
 
         if (existedPlayer) {
             return message
@@ -54,13 +54,14 @@ export class PlayerAddAction extends BaseAction {
                 .withData({name});
         }
 
-        const newPlayer: Player = await this.storageService.addPlayer(activeEvent, name);
+        const newPlayer: Player = await this.storageService.addPlayer(
+            activeEvent,
+            name,
+        );
 
-        return message
-            .setStatus(statuses.STATUS_SUCCESS)
-            .withData({
-                name: newPlayer.name,
-                ...(await this.playerHelper.getPlayersList(activeEvent)),
-            });
+        return message.setStatus(statuses.STATUS_SUCCESS).withData({
+            name: newPlayer.name,
+            ...(await this.playerHelper.getPlayersList(activeEvent)),
+        });
     }
 }

@@ -25,12 +25,7 @@ export class EventInfoAction extends BaseAction {
         playerHelper: PlayerHelper,
         storageService: StorageService,
     ) {
-        super(config,
-            appEmitter,
-            logger,
-            templateService,
-            storageService,
-        );
+        super(config, appEmitter, logger, templateService, storageService);
 
         this.playerHelper = playerHelper;
     }
@@ -40,19 +35,21 @@ export class EventInfoAction extends BaseAction {
     }
 
     protected async doAction(chat: Chat, message: IMessage): Promise<IMessage> {
-        const activeEvent: Event = await this.storageService.findChatActiveEvent(chat);
+        const activeEvent: Event = await this.storageService.findChatActiveEvent(
+            chat,
+        );
 
         if (!activeEvent) {
             return message.setStatus(statuses.STATUS_NO_EVENT);
         }
 
-        const players: Player[] = await this.storageService.getPlayers(activeEvent);
+        const players: Player[] = await this.storageService.getPlayers(
+            activeEvent,
+        );
 
-        return message
-            .setStatus(statuses.STATUS_SUCCESS)
-            .withData({
-                date: formatEventDate(activeEvent.date),
-                ...(await this.playerHelper.getPlayersList(activeEvent)),
-            });
+        return message.setStatus(statuses.STATUS_SUCCESS).withData({
+            date: formatEventDate(activeEvent.date),
+            ...(await this.playerHelper.getPlayersList(activeEvent)),
+        });
     }
 }

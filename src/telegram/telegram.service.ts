@@ -20,7 +20,10 @@ export class TelegramService {
             : new Telegraf(botToken);
 
         this.getCommandEventMapping(appEmitter).forEach(([command, event]) => {
-            this.bot.command(command, (ctx) => appEmitter.emit(event, new TelegramMessage(ctx)));
+            this.bot.command(command, ctx => {
+                ctx.command = command;
+                appEmitter.emit(event, new TelegramMessage(ctx));
+            });
         });
     }
 
@@ -51,7 +54,9 @@ export class TelegramService {
      * @returns {Array<[string, string]>}
      * @memberOf TelegramService
      */
-    private getCommandEventMapping(appEmitter: AppEmitter): Array<[string, string]> {
+    private getCommandEventMapping(
+        appEmitter: AppEmitter,
+    ): Array<[string, string]> {
         return [
             ['event_add', appEmitter.EVENT_ADD],
             ['event_remove', appEmitter.EVENT_REMOVE],

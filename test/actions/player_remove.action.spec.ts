@@ -1,7 +1,10 @@
 import 'mocha';
 import {expect} from 'chai';
 
-import {createContextStub, createEventAddContextStub} from '../stubs/context.stub';
+import {
+    createContextStub,
+    createEventAddContextStub,
+} from '../stubs/context.stub';
 import {createModuleStub} from '../stubs/actions.module.stub';
 import {clearDatabase} from '../helpers/db-helper';
 
@@ -68,7 +71,10 @@ describe('PlayerRemoveAction', () => {
 
             it('should return no_player response if player was not found by given name', async () => {
                 const jsonRes: string = await new Promise(resolve => {
-                    const ctx = createContextStub({text: 'John Smith'}, resolve);
+                    const ctx = createContextStub(
+                        {text: 'John Smith'},
+                        resolve,
+                    );
                     appEmitter.emit(appEmitter.PLAYER_REMOVE, ctx);
                 });
 
@@ -94,7 +100,10 @@ describe('PlayerRemoveAction', () => {
 
                 beforeEach(async () => {
                     await new Promise(resolve => {
-                        const ctx = createContextStub({text: 'John Smith'}, resolve);
+                        const ctx = createContextStub(
+                            {text: 'John Smith'},
+                            resolve,
+                        );
                         appEmitter.emit(appEmitter.PLAYER_ADD, ctx);
                     });
                 });
@@ -103,7 +112,10 @@ describe('PlayerRemoveAction', () => {
                     await assertExistedPlayer_();
 
                     await new Promise(resolve => {
-                        const ctx = createContextStub({text: 'John Smith'}, resolve);
+                        const ctx = createContextStub(
+                            {text: 'John Smith'},
+                            resolve,
+                        );
                         appEmitter.emit(appEmitter.PLAYER_REMOVE, ctx);
                     });
 
@@ -114,7 +126,10 @@ describe('PlayerRemoveAction', () => {
                     await assertExistedPlayer_();
 
                     await new Promise(resolve => {
-                        const ctx = createContextStub({firstName: 'John', lastName: 'Smith'}, resolve);
+                        const ctx = createContextStub(
+                            {firstName: 'John', lastName: 'Smith'},
+                            resolve,
+                        );
                         appEmitter.emit(appEmitter.PLAYER_REMOVE, ctx);
                     });
 
@@ -123,7 +138,10 @@ describe('PlayerRemoveAction', () => {
 
                 it('should return success result', async () => {
                     const jsonRes: string = await new Promise(resolve => {
-                        const ctx = createContextStub({text: 'John Smith'}, resolve);
+                        const ctx = createContextStub(
+                            {text: 'John Smith'},
+                            resolve,
+                        );
                         appEmitter.emit(appEmitter.PLAYER_REMOVE, ctx);
                     });
 
@@ -133,7 +151,10 @@ describe('PlayerRemoveAction', () => {
 
                 it('should inlude name of removed player into result', async () => {
                     const jsonRes: string = await new Promise(resolve => {
-                        const ctx = createContextStub({text: 'John Smith'}, resolve);
+                        const ctx = createContextStub(
+                            {text: 'John Smith'},
+                            resolve,
+                        );
                         appEmitter.emit(appEmitter.PLAYER_REMOVE, ctx);
                     });
 
@@ -143,12 +164,18 @@ describe('PlayerRemoveAction', () => {
 
                 it('should include list of players into result', async () => {
                     await new Promise(resolve => {
-                        const ctx = createContextStub({text: 'Jack Wayne'}, resolve);
+                        const ctx = createContextStub(
+                            {text: 'Jack Wayne'},
+                            resolve,
+                        );
                         appEmitter.emit(appEmitter.PLAYER_ADD, ctx);
                     });
 
                     const jsonRes: string = await new Promise(resolve => {
-                        const ctx = createContextStub({text: 'John Smith'}, resolve);
+                        const ctx = createContextStub(
+                            {text: 'John Smith'},
+                            resolve,
+                        );
                         appEmitter.emit(appEmitter.PLAYER_REMOVE, ctx);
                     });
 

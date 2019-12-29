@@ -16,23 +16,19 @@ export class EventAddAction extends BaseAction {
     protected async doAction(chat: Chat, message: IMessage): Promise<IMessage> {
         await this.storageService.markChatEventsInactive(chat);
 
-        const eventDate: Date = this.getEventDate(message);
+        const eventDate: Date = parseEventDate(message.text.trim());
 
         if (!eventDate) {
             return message.setStatus(statuses.STATUS_INVALID_DATE);
         }
 
-        const event: Event = await this.storageService.appendChatActiveEvent(chat, eventDate);
+        const event: Event = await this.storageService.appendChatActiveEvent(
+            chat,
+            eventDate,
+        );
 
-        return message
-            .setStatus(statuses.STATUS_SUCCESS)
-            .withData({
-                date: formatEventDate(event.date),
-            });
-    }
-
-    private getEventDate(message: IMessage): Date {
-        const [, ...dateText] = message.text.split(' ');
-        return parseEventDate(dateText.join(' '));
+        return message.setStatus(statuses.STATUS_SUCCESS).withData({
+            date: formatEventDate(event.date),
+        });
     }
 }

@@ -1,11 +1,9 @@
 import * as moment from 'moment';
 
-export const parseEventDate = (str: string = '') =>  {
+export const parseEventDate = (str: string = '') => {
     str = str.trim();
 
-    return moment(str).isValid()
-        ? moment.utc(str).toDate()
-        : null;
+    return moment(str).isValid() ? moment.utc(str).toDate() : null;
 };
 
 export const formatEventDate = (date: Date | string): string => {

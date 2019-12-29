@@ -4,6 +4,8 @@ export class BaseMessage implements IMessage {
     public chatId: number;
     public lang: string;
     public text: string;
+    public fullText: string;
+    public command: string;
 
     protected firstName: string;
     protected lastName: string;
@@ -18,11 +20,10 @@ export class BaseMessage implements IMessage {
      * @memberOf BaseMessage
      */
     get name(): string {
-        const targetName: string = this.text.replace(/^\/(add|remove)\S*/, '').trim();
+        const firstName: string = this.firstName || '';
+        const lastName: string = this.lastName || '';
 
-        return targetName.length > 0
-            ? targetName
-            : this.composeOwnName();
+        return `${firstName} ${lastName}`.trim();
     }
 
     /**
@@ -71,14 +72,7 @@ export class BaseMessage implements IMessage {
      * @returns {string}
      * @memberOf BaseMessage
      */
-    public answer(args: any): string|void {
+    public answer(args: any): string | void {
         throw new Error('not implemented');
-    }
-
-    private composeOwnName() {
-        const firstName: string = this.firstName || '';
-        const lastName: string = this.lastName || '';
-
-        return `${firstName} ${lastName}`.trim();
     }
 }

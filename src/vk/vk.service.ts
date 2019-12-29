@@ -15,7 +15,7 @@ export class VKService {
         this.bot = new VkBot(botToken);
 
         this.getCommandEventMapping(appEmitter).forEach(([command, event]) => {
-            this.bot.command(`/${command}`, async (ctx) => {
+            this.bot.command(`/${command}`, async ctx => {
                 const [from] = await this.bot.execute('users.get', {
                     user_ids: ctx.message.from_id,
                 });
@@ -36,7 +36,9 @@ export class VKService {
      * @returns {Array<[string, string]>}
      * @memberOf VKService
      */
-    private getCommandEventMapping(appEmitter: AppEmitter): Array<[string, string]> {
+    private getCommandEventMapping(
+        appEmitter: AppEmitter,
+    ): Array<[string, string]> {
         return [
             ['event_add', appEmitter.EVENT_ADD],
             ['event_remove', appEmitter.EVENT_REMOVE],

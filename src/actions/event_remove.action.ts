@@ -14,15 +14,15 @@ export class EventRemoveAction extends BaseAction {
     }
 
     protected async doAction(chat: Chat, message: IMessage): Promise<IMessage> {
-        const activeEvent: Event = await this.storageService.findChatActiveEvent(chat);
+        const activeEvent: Event = await this.storageService.findChatActiveEvent(
+            chat,
+        );
         await this.storageService.markChatEventsInactive(chat);
 
         if (activeEvent) {
-            return message
-                .setStatus(statuses.STATUS_SUCCESS)
-                .withData({
-                    date: formatEventDate(activeEvent.date),
-                });
+            return message.setStatus(statuses.STATUS_SUCCESS).withData({
+                date: formatEventDate(activeEvent.date),
+            });
         } else {
             return message.setStatus(statuses.STATUS_NO_EVENT);
         }

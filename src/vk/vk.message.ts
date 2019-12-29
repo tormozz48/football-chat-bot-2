@@ -11,7 +11,9 @@ export class VKMessage extends BaseMessage implements IMessage {
 
         const {message} = this.ctx;
         this.chatId = this.getChatId(this.ctx);
-        this.text = message.text;
+        this.fullText = message.text;
+        this.command = this.ctx.command;
+        this.text = this.fullText.replace(`/${this.command}`, '');
         this.lang = 'ru';
         this.firstName = message.from.first_name;
         this.lastName = message.from.last_name;
@@ -23,7 +25,7 @@ export class VKMessage extends BaseMessage implements IMessage {
     }
 
     private getChatId({message, bot}): number {
-        const peerId: number = +(`${message.peer_id}`.replace(/[0-9]0+/, ''));
+        const peerId: number = +`${message.peer_id}`.replace(/[0-9]0+/, '');
         const groupId: number = bot.settings.group_id;
         return peerId + groupId;
     }

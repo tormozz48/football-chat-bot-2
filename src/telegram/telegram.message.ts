@@ -11,13 +11,15 @@ export class TelegramMessage extends BaseMessage implements IMessage {
 
         const {message} = this.ctx.update;
         this.chatId = message.chat.id;
-        this.text = message.text;
+        this.fullText = message.text;
+        this.command = this.ctx.command;
+        this.text = this.fullText.replace(`/${this.command}`, '');
         this.lang = message.from.language_code;
         this.firstName = message.from.first_name;
         this.lastName = message.from.last_name;
     }
 
-    public answer(args: any): string|void {
+    public answer(args: any): string | void {
         return this.ctx.replyWithHTML(args);
     }
 }
