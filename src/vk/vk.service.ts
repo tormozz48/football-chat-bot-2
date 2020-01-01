@@ -19,6 +19,7 @@ export class VKService {
                 const [from] = await this.bot.execute('users.get', {
                     user_ids: ctx.message.from_id,
                 });
+                ctx.command = command;
                 ctx.message.from = from;
                 appEmitter.emit(event, new VKMessage(ctx));
             });
