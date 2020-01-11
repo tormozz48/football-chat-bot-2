@@ -1,6 +1,6 @@
 {
   "name": "football-chat-bot-2",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Footbal chat bot build with NestJS framework",
   "main": "dist/index.js",
   "scripts": {
