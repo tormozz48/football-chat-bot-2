@@ -1,4 +1,5 @@
 import {TelegramMessage} from '../../src/telegram/telegram.message';
+import moment = require('moment');
 
 export const createContextStub = (params: any, callback) => {
     const {
@@ -30,8 +31,10 @@ export const createContextStub = (params: any, callback) => {
 };
 
 export const createEventAddContextStub = (params: any, callback) => {
+    const defaultDate = moment.utc().add(2, 'days').format('YYYY-MM-DD HH:mm');
+
     params.command = 'event_add';
-    params.text = params.text || '/event_add 2019-06-12 17:30';
+    params.text = params.text || `/event_add ${defaultDate}`;
 
     return createContextStub(params, callback);
 };
