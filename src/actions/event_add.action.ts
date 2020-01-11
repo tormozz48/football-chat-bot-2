@@ -14,14 +14,13 @@ export class EventAddAction extends BaseAction {
     }
 
     protected async doAction(chat: Chat, message: IMessage): Promise<IMessage> {
-        await this.storageService.markChatEventsInactive(chat);
-
         const eventDate: Date = parseEventDate(message.text.trim());
 
         if (!eventDate) {
             return message.setStatus(statuses.STATUS_INVALID_DATE);
         }
 
+        await this.storageService.markChatEventsInactive(chat);
         const event: Event = await this.storageService.appendChatActiveEvent(
             chat,
             eventDate,

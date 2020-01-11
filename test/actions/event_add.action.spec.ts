@@ -95,6 +95,34 @@ describe('EventAddAction', () => {
             expect(events[1].active).to.equal(true);
         });
 
+        it('should not deactivate existed event if current event date is invalid', async () => {
+            let events: Event[];
+
+            await new Promise(resolve => {
+                const ctx = createEventAddContextStub({}, resolve);
+                appEmitter.emit(appEmitter.EVENT_ADD, ctx);
+            });
+
+            events = await storageService.connection
+                .getRepository(Event)
+                .find({});
+            expect(events.length).to.equal(1);
+            expect(events[0].active).to.equal(true);
+
+            await new Promise(resolve => {
+                const ctx = createEventAddContextStub({
+                    text: '/event_add',
+                }, resolve);
+                appEmitter.emit(appEmitter.EVENT_ADD, ctx);
+            });
+
+            events = await storageService.connection
+                .getRepository(Event)
+                .find({});
+            expect(events.length).to.equal(1);
+            expect(events[0].active).to.equal(true);
+        });
+
         it('should return information about created event', async () => {
             const jsonRes: string = await new Promise(resolve => {
                 const ctx = createEventAddContextStub({}, resolve);
