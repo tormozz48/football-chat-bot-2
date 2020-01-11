@@ -1,7 +1,7 @@
 import {Injectable} from '@nestjs/common';
 
 import * as statuses from './statuses';
-import {parseEventDate, formatEventDate} from '../common/utils';
+import {parseEventDate, isDateInPast, formatEventDate} from '../common/utils';
 import {BaseAction} from './base.action';
 import {Chat} from '../storage/models/chat';
 import {Event} from '../storage/models/event';
@@ -14,14 +14,17 @@ export class EventAddAction extends BaseAction {
     }
 
     protected async doAction(chat: Chat, message: IMessage): Promise<IMessage> {
-        await this.storageService.markChatEventsInactive(chat);
-
         const eventDate: Date = parseEventDate(message.text.trim());
 
         if (!eventDate) {
             return message.setStatus(statuses.STATUS_INVALID_DATE);
         }
 
+        if (isDateInPast(eventDate)) {
+            return message.setStatus(statuses.STATUS_INVALID_DATE_PAST);
+        }
+
+        await this.storageService.markChatEventsInactive(chat);
         const event: Event = await this.storageService.appendChatActiveEvent(
             chat,
             eventDate,
