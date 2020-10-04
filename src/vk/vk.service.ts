@@ -39,7 +39,7 @@ export class VKService {
      */
     private getCommandEventMapping(
         appEmitter: AppEmitter,
-    ): Array<[string, string]> {
+    ): [string, string][] {
         return [
             ['event_add', appEmitter.EVENT_ADD],
             ['event_remove', appEmitter.EVENT_REMOVE],
