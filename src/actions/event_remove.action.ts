@@ -20,6 +20,8 @@ export class EventRemoveAction extends BaseAction {
         await this.storageService.markChatEventsInactive(chat);
 
         if (activeEvent) {
+            this.logger.log(`Active event with id=${activeEvent.id} date=${activeEvent.date} for chat ${chat.id} was removed`);
+
             return message.setStatus(statuses.STATUS_SUCCESS).withData({
                 date: formatEventDate(activeEvent.date),
             });

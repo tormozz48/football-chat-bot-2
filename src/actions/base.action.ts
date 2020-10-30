@@ -8,12 +8,12 @@ import {Chat} from '../storage/models/chat';
 
 @Injectable()
 export class BaseAction {
-    protected appEmitter: AppEmitter;
-    protected config: ConfigService;
-    protected logger: Logger;
+    protected readonly appEmitter: AppEmitter;
+    protected readonly config: ConfigService;
+    protected readonly logger: Logger;
 
-    protected templateService: TemplateService;
-    protected storageService: StorageService;
+    protected readonly templateService: TemplateService;
+    protected readonly storageService: StorageService;
 
     protected event: string;
 

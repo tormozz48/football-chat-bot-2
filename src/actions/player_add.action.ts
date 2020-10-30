@@ -39,6 +39,7 @@ export class PlayerAddAction extends BaseAction {
         );
 
         if (!activeEvent) {
+            this.logger.warn(`No active events for chat with id=${chat.id} were found`);
             return message.setStatus(statuses.STATUS_NO_EVENT);
         }
 
@@ -58,6 +59,8 @@ export class PlayerAddAction extends BaseAction {
             activeEvent,
             name,
         );
+
+        this.logger.log(`Player with id=${newPlayer.id} name=${newPlayer.name} has been added to event ${activeEvent.id}`);
 
         return message.setStatus(statuses.STATUS_SUCCESS).withData({
             name: newPlayer.name,

@@ -21,6 +21,7 @@ export class EventAddAction extends BaseAction {
         }
 
         if (isDateInPast(eventDate)) {
+            this.logger.warn(`Date of event ${eventDate} was given as date from past`);
             return message.setStatus(statuses.STATUS_INVALID_DATE_PAST);
         }
 
@@ -29,6 +30,8 @@ export class EventAddAction extends BaseAction {
             chat,
             eventDate,
         );
+
+        this.logger.log(`New active event with date=${eventDate} for chat ${chat.id} was created`);
 
         return message.setStatus(statuses.STATUS_SUCCESS).withData({
             date: formatEventDate(event.date),

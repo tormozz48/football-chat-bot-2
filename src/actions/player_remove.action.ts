@@ -39,6 +39,7 @@ export class PlayerRemoveAction extends BaseAction {
         );
 
         if (!activeEvent) {
+            this.logger.warn(`No active events for chat with id=${chat.id} were found`);
             return message.setStatus(statuses.STATUS_NO_EVENT);
         }
 
@@ -49,12 +50,15 @@ export class PlayerRemoveAction extends BaseAction {
         );
 
         if (!existedPlayer) {
+            this.logger.warn(`No existed players for event with id=${activeEvent.id} and name=${name} were found`);
             return message
                 .setStatus(statuses.STATUS_NO_PLAYER)
                 .withData({name});
         }
 
         await this.storageService.removePlayer(existedPlayer);
+
+        this.logger.log(`Player with id=${existedPlayer.id} name=${existedPlayer.name} has been removed from event ${activeEvent.id}`);
 
         return message.setStatus(statuses.STATUS_SUCCESS).withData({
             name,
