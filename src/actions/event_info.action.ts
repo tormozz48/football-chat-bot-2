@@ -40,6 +40,7 @@ export class EventInfoAction extends BaseAction {
         );
 
         if (!activeEvent) {
+            this.logger.warn(`No active events for chat with id=${chat.id} were found`);
             return message.setStatus(statuses.STATUS_NO_EVENT);
         }
 
