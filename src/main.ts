@@ -11,7 +11,7 @@ async function start() {
 
     const app = await NestFactory.create(AppModule);
     const config = app.select(CommonModule).get(ConfigService, {strict: true});
-    await app.listen(config.get('APP_PORT'));
+    await app.listen(config.get('PORT'));
 
     process.on('unhandledRejection', (reason, promise) => {
         // tslint:disable-next-line: no-console
