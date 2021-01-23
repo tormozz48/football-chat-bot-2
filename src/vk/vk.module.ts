@@ -1,4 +1,4 @@
-import {Module} from '@nestjs/common';
+import {Module, OnModuleInit} from '@nestjs/common';
 import {CommonModule} from '../common/common.module';
 import {VKService} from './vk.service';
 
@@ -7,8 +7,10 @@ import {VKService} from './vk.service';
     providers: [VKService],
     exports: [VKService],
 })
-export class VKModule {
-    constructor(vkService: VKService) {
-        vkService.launch();
+export class VKModule implements OnModuleInit {
+    constructor(private readonly vkService: VKService) {}
+
+    onModuleInit() {
+        this.vkService.launch();
     }
 }

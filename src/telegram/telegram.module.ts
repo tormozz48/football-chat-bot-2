@@ -1,4 +1,4 @@
-import {Module} from '@nestjs/common';
+import {Module, OnModuleInit} from '@nestjs/common';
 import {CommonModule} from '../common/common.module';
 import {TelegramService} from './telegram.service';
 
@@ -7,8 +7,10 @@ import {TelegramService} from './telegram.service';
     providers: [TelegramService],
     exports: [TelegramService],
 })
-export class TelegramModule {
-    constructor(telegramService: TelegramService) {
-        telegramService.launch();
+export class TelegramModule implements OnModuleInit {
+    constructor(private readonly telegramService: TelegramService) {}
+
+    onModuleInit() {
+        this.telegramService.launch();
     }
 }
