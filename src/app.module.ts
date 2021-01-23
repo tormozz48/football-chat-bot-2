@@ -1,12 +1,15 @@
-import {Module} from '@nestjs/common';
-import {PingController} from './ping.controller';
-import {TelegramModule} from './telegram/telegram.module';
-import {VKModule} from './vk/vk.module';
-import {ActionsModule} from './actions/actions.module';
+import { Module } from '@nestjs/common';
+import { TelegramModule } from './telegram/telegram.module';
+import { VKModule } from './vk/vk.module';
+import { ActionsModule } from './actions/actions.module';
 
 @Module({
-    imports: [TelegramModule, VKModule, ActionsModule],
-    controllers: [PingController],
+    imports: [
+        TelegramModule,
+        VKModule,
+        ActionsModule
+    ],
+    controllers: [],
     providers: [],
 })
-export class AppModule {}
+export class AppModule { }

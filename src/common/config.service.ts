@@ -1,4 +1,5 @@
 import * as envalid from 'envalid';
+import { VK_MODES } from './constants';
 
 export class ConfigService {
     private readonly envConfig: Record<string, string>;
@@ -13,6 +14,8 @@ export class ConfigService {
             TELEGRAM_PROXY_LOGIN: envalid.str(),
             TELEGRAM_PROXY_PASSWORD: envalid.str(),
             VK_TOKEN: envalid.str(),
+            VK_CONFIRMATION: envalid.str(),
+            VK_MODE: envalid.str({choices: [VK_MODES.LONG_POLLING, VK_MODES.CALLBACK]})
         });
     }
 

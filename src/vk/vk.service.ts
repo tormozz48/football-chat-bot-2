@@ -6,13 +6,14 @@ import {AppEmitter} from '../common/event-bus.service';
 import {VKMessage} from './vk.message';
 
 @Injectable()
-export class VKPollingService {
+export class VKService {
     private bot: VkBot<any>;
 
     constructor(config: ConfigService, appEmitter: AppEmitter) {
-        const botToken: string = config.get('VK_TOKEN');
+        const token: string = config.get('VK_TOKEN');
+        const confirmation: string = config.get('VK_CONFIRMATION');
 
-        this.bot = new VkBot(botToken);
+        this.bot = new VkBot({token, confirmation});
 
         this.getCommandEventMapping(appEmitter).forEach(([command, event]) => {
             this.bot.command(`/${command}`, async ctx => {
@@ -24,6 +25,10 @@ export class VKPollingService {
                 appEmitter.emit(event, new VKMessage(ctx));
             });
         });
+    }
+
+    public getBot(): VkBot<any> {
+        return this.bot;
     }
 
     public launch(): void {
