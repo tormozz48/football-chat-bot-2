@@ -17,6 +17,16 @@ export class VKMessage extends BaseMessage implements IMessage {
         this.lang = 'ru';
         this.firstName = message.from.first_name;
         this.lastName = message.from.last_name;
+
+        console.info(JSON.stringify({
+            chatId: this.chatId,
+            fullText: this.fullText,
+            command: this.command,
+            text: this.text,
+            lang: this.lang,
+            firstName: this.firstName,
+            lastName: this.lastName
+        }, null, 2));
     }
 
     public answer(args: any) {
