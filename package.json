@@ -77,7 +77,7 @@
     "handlebars-helpers": "^0.10.0",
     "lodash": "^4.17.20",
     "moment": "^2.29.0",
-    "node-vk-bot-api": "^3.3.7",
+    "node-vk-bot-api": "github:tormozz48/node-vk-bot-api",
     "nyc": "^15.1.0",
     "pg": "^8.3.3",
     "read-dir-deep": "^7.0.1",
