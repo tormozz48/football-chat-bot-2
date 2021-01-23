@@ -18,7 +18,7 @@ export class VKMessage extends BaseMessage implements IMessage {
         this.firstName = message.from.first_name;
         this.lastName = message.from.last_name;
 
-        console.log(message);
+        console.log(this.ctx);
         console.info(JSON.stringify({
             chatId: this.chatId,
             fullText: this.fullText,
