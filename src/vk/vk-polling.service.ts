@@ -6,7 +6,7 @@ import {AppEmitter} from '../common/event-bus.service';
 import {VKMessage} from './vk.message';
 
 @Injectable()
-export class VKService {
+export class VKPollingService {
     private bot: VkBot<any>;
 
     constructor(config: ConfigService, appEmitter: AppEmitter) {

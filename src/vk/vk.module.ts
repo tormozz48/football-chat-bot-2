@@ -1,16 +1,16 @@
 import {Module, OnModuleInit} from '@nestjs/common';
 import {CommonModule} from '../common/common.module';
-import {VKService} from './vk.service';
+import {VKPollingService} from './vk-polling.service';
 
 @Module({
     imports: [CommonModule],
-    providers: [VKService],
-    exports: [VKService],
+    providers: [VKPollingService],
+    exports: [VKPollingService],
 })
 export class VKModule implements OnModuleInit {
-    constructor(private readonly vkService: VKService) {}
+    constructor(private readonly vkPollingService: VKPollingService) {}
 
     onModuleInit() {
-        this.vkService.launch();
+        this.vkPollingService.launch();
     }
 }
