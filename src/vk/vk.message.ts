@@ -17,17 +17,6 @@ export class VKMessage extends BaseMessage implements IMessage {
         this.lang = 'ru';
         this.firstName = message.from.first_name;
         this.lastName = message.from.last_name;
-
-        console.log(this.ctx);
-        console.info(JSON.stringify({
-            chatId: this.chatId,
-            fullText: this.fullText,
-            command: this.command,
-            text: this.text,
-            lang: this.lang,
-            firstName: this.firstName,
-            lastName: this.lastName
-        }, null, 2));
     }
 
     public answer(args: any) {
@@ -35,9 +24,9 @@ export class VKMessage extends BaseMessage implements IMessage {
         this.ctx.reply(answer);
     }
 
-    private getChatId({message, bot}): number {
+    private getChatId({message, group_id, bot}): number {
         const peerId: number = +`${message.peer_id}`.replace(/[0-9]0+/, '');
-        const groupId: number = bot.settings.group_id;
+        const groupId: number = group_id || bot.settings.group_id;
         return peerId + groupId;
     }
 }
