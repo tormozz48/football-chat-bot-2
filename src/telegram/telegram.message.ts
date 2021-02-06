@@ -50,7 +50,7 @@ export class TelegramMessage extends BaseMessage implements IMessage {
         let text: string = fullText.replace(`/${this.command}`, '');
 
         if (this.ctx.botInfo && this.ctx.botInfo.username) {
-            text = text.replace(this.ctx.botInfo.username, '');
+            text = text.replace(new RegExp(`@?${this.ctx.botInfo.username}`), '');
         }
 
         return text;
