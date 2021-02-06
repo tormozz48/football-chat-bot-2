@@ -10,7 +10,7 @@ import {TelegramService} from './telegram.service';
 export class TelegramModule implements OnModuleInit {
     constructor(private readonly telegramService: TelegramService) {}
 
-    onModuleInit() {
-        this.telegramService.launch();
+    async onModuleInit() {
+        await this.telegramService.launch();
     }
 }

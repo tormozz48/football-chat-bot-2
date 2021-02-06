@@ -5,6 +5,7 @@ import * as SocksAgent from 'socks5-https-client/lib/Agent';
 import {ConfigService} from '../common/config.service';
 import {AppEmitter} from '../common/event-bus.service';
 import {TelegramMessage} from './telegram.message';
+import { User } from 'telegraf/typings/telegram-types';
 
 @Injectable()
 export class TelegramService {
@@ -27,7 +28,12 @@ export class TelegramService {
         });
     }
 
-    public launch(): void {
+    public async launch(): Promise<void> {
+        const botInfo: User = await this.bot.telegram.getMe();
+        if (botInfo) {
+            this.bot.options.username = botInfo.username
+        }
+
         this.bot.launch();
     }
 
