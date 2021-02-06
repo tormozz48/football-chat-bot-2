@@ -9,5 +9,5 @@ export interface IMessage {
     getReplyData: () => any;
     setStatus: (status: string) => IMessage;
     withData: (data: any) => IMessage;
-    answer: (args: any) => string | void;
+    answer: (args: any) => any;
 }

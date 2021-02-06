@@ -6,6 +6,7 @@ import {ConfigService} from '../common/config.service';
 import {AppEmitter} from '../common/event-bus.service';
 import {TelegramMessage} from './telegram.message';
 import { User } from 'telegraf/typings/telegram-types';
+import { TelegrafContext } from 'telegraf/typings/context';
 
 @Injectable()
 export class TelegramService {
@@ -21,7 +22,7 @@ export class TelegramService {
             : new Telegraf(botToken);
 
         this.getCommandEventMapping(appEmitter).forEach(([command, event]) => {
-            this.bot.command(command, ctx => {
+            this.bot.command(command, (ctx: TelegrafContext & {command?: string}) => {
                 ctx.command = command;
                 appEmitter.emit(event, new TelegramMessage(ctx));
             });
