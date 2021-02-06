@@ -10,7 +10,7 @@ export class TelegramMessage extends BaseMessage implements IMessage {
         this.ctx = ctx;
 
         const {message} = this.ctx.update;
-        this.chatId = message.chat.id;
+        this.chatId = this.adjustChatId(message.chat.id);
         this.fullText = message.text;
         this.command = this.ctx.command;
         this.text = this.fullText.replace(`/${this.command}`, '');
@@ -21,5 +21,13 @@ export class TelegramMessage extends BaseMessage implements IMessage {
 
     public answer(args: any): string | void {
         return this.ctx.replyWithHTML(args);
+    }
+
+    private adjustChatId(chatId: number): number {
+        if (Math.abs(chatId) < 2147483648) {
+            return chatId;
+        }
+
+        return this.adjustChatId(chatId >>> 1)
     }
 }
