@@ -30,8 +30,8 @@ export class TelegramMessage extends BaseMessage implements IMessage {
      * Telegram chat identifier may be greater or less then max 4 byte integer value
      * which is used as type for related column in postgresql
      * @private
-     * @param  {number} chatId 
-     * @return number 
+     * @param  {number} chatId
+     * @return number
      * @memberof TelegramMessage
      */
     private adjustChatId(chatId: number): number {
@@ -39,6 +39,7 @@ export class TelegramMessage extends BaseMessage implements IMessage {
             return chatId;
         }
 
+        // tslint:disable-next-line: no-bitwise
         return this.adjustChatId(chatId >>> 1)
     }
 
