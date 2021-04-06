@@ -75,7 +75,7 @@
     "events-extra": "^1.0.4",
     "handlebars": "^4.7.6",
     "handlebars-helpers": "^0.10.0",
-    "lodash": "^4.17.20",
+    "lodash": "^4.17.21",
     "moment": "^2.29.0",
     "node-vk-bot-api": "github:tormozz48/node-vk-bot-api",
     "nyc": "^15.1.0",
