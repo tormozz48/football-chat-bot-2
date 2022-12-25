@@ -60,7 +60,7 @@
     "registry": "https://npm.pkg.github.com/"
   },
   "dependencies": {
-    "@nestjs/cli": "^8.1.7",
+    "@nestjs/cli": "^9.1.0",
     "@nestjs/common": "^7.6.14",
     "@nestjs/core": "^7.6.14",
     "@nestjs/platform-express": "^7.6.14",
@@ -89,7 +89,7 @@
     "sqlite3": "^5.0.0",
     "telegraf": "^3.38.0",
     "ts-node": "^9.0.0",
-    "tsconfig-paths": "^3.9.0",
+    "tsconfig-paths": "^3.10.0",
     "typeorm": "^0.2.28",
     "typescript": "^4.2.3"
   },
