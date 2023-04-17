@@ -89,7 +89,7 @@
     "sqlite3": "^5.0.0",
     "telegraf": "^3.38.0",
     "ts-node": "^9.0.0",
-    "tsconfig-paths": "^3.9.0",
+    "tsconfig-paths": "^3.14.2",
     "typeorm": "^0.3.12",
     "typescript": "^4.9.5"
   },
