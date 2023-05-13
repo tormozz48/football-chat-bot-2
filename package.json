@@ -83,7 +83,7 @@
     "read-dir-deep": "^7.0.1",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
-    "rxjs": "^6.6.3",
+    "rxjs": "^6.6.7",
     "socks5-https-client": "^1.2.1",
     "sql.js": "^1.8.0",
     "sqlite3": "^5.1.6",
