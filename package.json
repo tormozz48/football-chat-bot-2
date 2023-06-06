@@ -79,7 +79,7 @@
     "moment": "^2.29.2",
     "node-vk-bot-api": "github:tormozz48/node-vk-bot-api",
     "nyc": "^15.1.0",
-    "pg": "^8.10.0",
+    "pg": "^8.11.0",
     "read-dir-deep": "^7.0.1",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
