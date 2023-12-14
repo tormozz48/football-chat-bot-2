@@ -61,7 +61,7 @@
   },
   "dependencies": {
     "@nestjs/cli": "^8.2.8",
-    "@nestjs/common": "^7.6.18",
+    "@nestjs/common": "^9.0.0",
     "@nestjs/core": "^7.6.18",
     "@nestjs/platform-express": "^7.6.18",
     "@nestjs/typeorm": "^7.1.4",
