@@ -61,7 +61,7 @@
   },
   "dependencies": {
     "@nestjs/cli": "^8.2.8",
-    "@nestjs/common": "^7.6.18",
+    "@nestjs/common": "^9.0.0",
     "@nestjs/core": "^7.6.18",
     "@nestjs/platform-express": "^7.6.18",
     "@nestjs/typeorm": "^7.1.4",
@@ -86,7 +86,7 @@
     "rxjs": "^6.6.7",
     "socks5-https-client": "^1.2.1",
     "sql.js": "^1.8.0",
-    "sqlite3": "^5.1.6",
+    "sqlite3": "^5.1.7",
     "telegraf": "^3.38.0",
     "ts-node": "^9.0.0",
     "tsconfig-paths": "^3.14.2",
